@@ -34,7 +34,7 @@ const Home = () => {
       <Navbar cartItemCount={cartItemCount} />
       <Hero />
       <Slider />
-      <ExploreMenu title1='What are you' title2='searching for?' />
+      {/* <ExploreMenu title1='What are you' title2='searching for?' /> */}
       <FoodDisplay category={category} setCategory={setCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <Review />
       <Footer />

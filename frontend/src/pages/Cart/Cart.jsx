@@ -311,7 +311,12 @@ const CartPage = () => {
       return total + item.price * item.quantity * gstRate;
     }, 0);
   };
-
+  const calculateItemSavings = (item) => {
+    return (item.mrp - item.price) * item.quantity;
+  };
+  const calculateTotalSavings = () => {
+    return cartItems.reduce((total, item) => total + calculateItemSavings(item), 0);
+  };  
   const calculateFinalAmount = () => {
     const subtotal = calculateSubtotal();
     const gst = calculateGST();
@@ -390,9 +395,9 @@ const CartPage = () => {
                       <p className="text-[12px] lg:text-[12px] font-bold text-[#909090]">
                         ₹{item.price} per {item.weight}
                       </p>
-                      {/* <p className="text-[12px] lg:text-[12px] font-bold text-[#26A460]">
-                        with offer ₹{item.price}
-                      </p> */}
+                      <p className="text-[12px] lg:text-[12px] font-bold text-[#26A460]">
+                        You save ₹{calculateItemSavings(item)}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center">
@@ -467,7 +472,7 @@ const CartPage = () => {
                 <div className="flex gap-1 mt-3">
                   <img src="saving.svg"></img>
                   <p className="text-[#26A460] text-[14px] font-bold font-Nunito">
-                    You saved ₹499 in this order!
+                    You saved ₹{calculateTotalSavings()} in this order!
                   </p>
                 </div>
                 <div className="mt-4">

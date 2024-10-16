@@ -48,6 +48,12 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
     return weightOption ? weightOption.price : 0;
   };
 
+  const getmrpPrice = () => {
+    if (!selectedItem || !selectedWeight) return 0;
+    const weightOption = selectedItem.weights.find(w => w.weight === selectedWeight);
+    return weightOption ? weightOption.mrp : 0;
+  };
+
   const handleAddToCart = () => {
     if (!selectedItem) return;
     const cartItem = {
@@ -58,7 +64,8 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
       totalprice: getWeightPrice() * quantity,
       image: selectedItem.image,
       category : selectedItem.category,
-      gst : selectedItem.gst
+      gst : selectedItem.gst,
+      mrp : getmrpPrice()*quantity
     };
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
     existingCart.push(cartItem);
@@ -79,7 +86,8 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
       price: getWeightPrice() * quantity,
       image: selectedItem.image,
       category: selectedItem.category,
-      gst : selectedItem.gst
+      gst : selectedItem.gst,
+      mrp : getmrpPrice() * quantity
     };
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
     existingCart.push(cartItem);
@@ -94,11 +102,11 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
 
   return (
     <div className="" id="food-display">
-      <SearchBar
+      {/* <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         
-      />
+      /> */}
 
       <div className="grid grid-cols-2 md:grid-cols-3">
         {filteredFoodList.length > 0 ? (
@@ -225,9 +233,9 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
                   <div className="flex items-center gap-2 mt-4 justify-between mb-16 md:mb-4">
                     <p className="text-[14px] font-bold text-[#606060] font-Nunito">
                       ₹{getWeightPrice() }{" "}
-                      {/* <p className="text-[14px] font-bold text-[#26A460] font-Nunito">
-                        With Offer ₹{selectedItem.offer}
-                      </p> */}
+                      <p className="text-[14px] font-bold text-[#26A460] font-Nunito">
+                        You save ₹{getmrpPrice()-getWeightPrice()}
+                      </p>
                     </p>
                     <div className="bg-[#F8F8F8] border border-[#E6E6E6] px-2 rounded-lg">
                       <button

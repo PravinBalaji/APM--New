@@ -53,7 +53,7 @@ const slides = [
   return (
     <div className="flex flex-col items-center h-auto  md:h-[80vh] lg:h-screen bg-gradient-to-b from-[#FFFFFF] to-[#FFF9EA] overflow-hidden">
       {/* Text Section */}
-      <div className="w-full pt-[10px] md:pt-[32px] pb-[32px]" style={{ backgroundImage: 'url(background.svg)' }}>
+      {/* <div className="w-full pt-[10px] md:pt-[32px] pb-[32px]" style={{ backgroundImage: 'url(background.svg)' }}>
         <div className="gap-4 text-center md:mt-4">
           <h1 className="font-Philosopher text-[24px] md:text-[32px] font-black bg-gradient-to-r from-[#A5813B] to-[#8F6109] text-transparent bg-clip-text leading-[35.84px] pb-[12px]">
             Festivities are Flat <br />
@@ -63,7 +63,7 @@ const slides = [
             Order now to ensure your festivities are filled with joy and flavor!
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* Image Section */}
       <div
