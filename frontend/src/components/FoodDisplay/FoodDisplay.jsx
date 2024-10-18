@@ -67,11 +67,11 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
       quantity,
       weight: selectedWeight,
       price: getWeightPrice(),
-      totalprice: getWeightPrice() * quantity,
+      totalprice : getWeightPrice() * quantity,
       image: selectedItem.image,
-      category : selectedItem.category,
+      category: selectedItem.category,
       gst : selectedItem.gst,
-      mrp : getmrpPrice()*quantity,
+      mrp : getmrpPrice(),
       gstValue : gstValue()*quantity
     };
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -83,6 +83,13 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
     setToastMessage("Item added successfully!");
     setToastKey((prevKey) => prevKey + 1);
     handleCloseOverlay();
+    console.log("Item added:", {
+      name: selectedItem.name,
+      mrp: getmrpPrice(),
+      price: getWeightPrice(),
+      quantity: quantity,
+      // calculatedSavings: (getmrpPrice() - getWeightPrice()) * quantity
+    });
   };
 
   const handleBuyNow = () => {
@@ -91,11 +98,12 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
       name: selectedItem.name,
       quantity,
       weight: selectedWeight,
-      price: getWeightPrice() * quantity,
+      price: getWeightPrice(),
+      totalprice : getWeightPrice() * quantity,
       image: selectedItem.image,
       category: selectedItem.category,
       gst : selectedItem.gst,
-      mrp : getmrpPrice() * quantity,
+      mrp : getmrpPrice(),
       gstValue : gstValue()*quantity
     };
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];

@@ -33,7 +33,9 @@ const CartPage = () => {
   useEffect(() => {
     // This effect will run whenever cartUpdateTrigger changes
     // You can add any additional logic here if needed
+    
   }, [cartItems]);
+
 
   const [isLoading, setIsLoading] = useState(false);
   const [buttonPressed, setButtonPressed] = useState(false);
@@ -333,13 +335,14 @@ const CartPage = () => {
   const { sweetsGST, savouriesGST, totalGST } = calculateGST();
 
   const calculateItemSavings = (item) => {
-    return (item.mrp - item.price) * item.quantity;
+    return Math.round(((item.mrp - item.price) * item.quantity * 100)) / 100;
   };
+  
   const calculateTotalSavings = () => {
-    return cartItems.reduce(
-      (total, item) => total + calculateItemSavings(item),
+    return Math.round(cartItems.reduce(
+      (total, item) => total + calculateItemSavings(item) * 100,
       0
-    );
+    )) / 100;
   };
   const calculateFinalAmount = () => {
     const subtotal = calculateSubtotal();
@@ -420,7 +423,7 @@ const CartPage = () => {
                         ₹{item.price} per {item.weight}
                       </p>
                       <p className="text-[12px] lg:text-[12px] font-bold text-[#26A460]">
-                        You save ₹{calculateItemSavings(item)}
+                        You save ₹{calculateItemSavings(item).toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -496,7 +499,7 @@ const CartPage = () => {
                 <div className="flex gap-1 mt-3">
                   <img src="saving.svg"></img>
                   <p className="text-[#26A460] text-[14px] font-bold font-Nunito">
-                    You saved ₹{calculateTotalSavings()} in this order!
+                    You saved ₹{calculateTotalSavings().toFixed(2)} in this order!
                   </p>
                 </div>
                 <div className="mt-4">
