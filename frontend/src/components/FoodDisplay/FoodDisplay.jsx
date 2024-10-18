@@ -249,7 +249,7 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
 
                   <div className="flex items-center gap-2 mt-4 justify-between mb-16 md:mb-4">
                     <p className="text-[14px] font-bold text-[#606060] font-Nunito">
-                      ₹{getWeightPrice() }{" "}
+                      ₹{getWeightPrice() }{" "}<span className="line-through">₹{getmrpPrice()}</span>
                       <p className="text-[14px] font-bold text-[#26A460] font-Nunito">
                         You save ₹{getmrpPrice()-getWeightPrice()}
                       </p>

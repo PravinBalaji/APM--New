@@ -73,7 +73,7 @@ const Navbar = ({ cartItemCount }) => {
           className={`cursor-pointer ${selected === 'profile' ? '' : ''}`}
           onClick={() => handleSelect('profile')}
         >
-          <img src="Profile.svg" className="lg:w-[30px] lg:h-[30px] w-[24px] h-[24px] text-[#70513A]" />
+          <img src="Profile.png" className="lg:w-[30px] lg:h-[30px] w-[24px] h-[24px] text-[#70513A]" />
         </div>
         <div className="relative cursor-pointer" onClick={() => handleSelect('cart')}>
           <img src="Cart.svg" className="lg:w-[30px] lg:h-[30px] w-[24px] h-[24px] text-[#70513A]" />
