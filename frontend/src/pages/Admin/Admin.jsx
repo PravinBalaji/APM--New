@@ -7,12 +7,14 @@ const Admin = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [orderCancelled, setOrderCancelled] = useState(false);
 
   useEffect(() => {
-    if (activeTab !== "dashboard") {
+    if (activeTab !== "dashboard" || orderCancelled) {
       fetchOrders(activeTab);
+      setOrderCancelled(false); // Reset the flag after fetching
     }
-  }, [activeTab]);
+  }, [activeTab, orderCancelled]);
 
   const fetchOrders = async (status) => {
     setIsLoading(true);
@@ -23,6 +25,7 @@ const Admin = () => {
           deliveryStatus: status,
         }
       );
+      console.log(response);
       setOrders(
         Array.isArray(response.data.result) ? response.data.result : []
       );
@@ -60,6 +63,7 @@ const Admin = () => {
         }
       );
       alert("Order Cancelled");
+      setOrderCancelled(true); // Set the flag to trigger useEffect
     } catch (err) {
       console.log(err);
     }
@@ -89,6 +93,12 @@ const Admin = () => {
         <p>Address: {order.address}</p>
         <p>Total: ₹{order.total_price}</p>
         <p>Payment: {order.payment_status}</p>
+        <p>
+          {activeTab.toUpperCase()} DATE:{" "}
+          {order[`${activeTab}_date`]
+            ? formatDate(order[`${activeTab}_date`])
+            : "N/A"}
+        </p>
 
         <div className="mt-4">
           <h4 className="font-semibold">Order Items:</h4>
@@ -114,11 +124,11 @@ const Admin = () => {
           Cancel
         </button>
       </div>
-      <div className="mt-4 lg:mt-0 lg:w-1/4">
+      <div className="mt-4 lg:mt-0 lg:w-1/4 bg-red">
         <select
-          defaultValue={order.delivery_status}
+          value={activeTab} // Use activeTab as the value
           onChange={(e) => changeStatus(order.order_id, e.target.value)}
-          className="border rounded p-2 w-full lg:w-[120px]"
+          className={`border rounded p-2 w-full lg:w-[120px] status-${activeTab}`}
         >
           <option value="received">Received</option>
           <option value="processing">Processing</option>
