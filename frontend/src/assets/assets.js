@@ -168,7 +168,7 @@ export const food_list = [
   {
     _id: "4",
     name: "Nuts Cruncher |  Layered Nuts Sweet ",
-    description: "Almond Crunch, Pista Crunch and Cashew Crunch",
+    description: "Crafted from premium almonds, cashew nuts, and pista, finely layered for a light, crunchy treat. A perfect blend of rich nuts and delicate texture in every bite.",
     image: [crunchy, almond, pistacrunch, cashew],
     weights: [
       { weight: "500G", price: 715, mrp: 750, gst: 35.75 },
@@ -265,7 +265,8 @@ export const food_list = [
   {
     _id: "11",
     name: "Dry Fruit Sweets",
-    description: "Dry Fruits such like Kiwi, Strawberry",
+    description:
+      " A luxurious assortment of sweets made from anjeer (figs), dates, and a rich blend of almonds, pistachios, and cashews. These naturally sweet and nutrient-rich treats are crafted without refined sugar, offering a wholesome and delicious experience.",
     image: [dryfruits, kiwi, strawberry],
     weights: [
       { weight: "250G", price: 357, mrp: 375, gst: 17.85 },
@@ -301,7 +302,7 @@ export const food_list = [
   {
     _id: "14",
     name: "Choco Dip Badam | Chocolate Badam",
-    description: " Roasted Amond Coated with Chocolate.",
+    description: " Indulge in our Choco Dip Badam—roasted almonds perfectly coated with smooth, rich chocolate for a delightful blend of crunch and sweetness.",
     image: [chocodip1, chocodip2],
     weights: [{ weight: "150G", price: 201, mrp: 300, gst: 10.05 }],
     category: "Sweets",

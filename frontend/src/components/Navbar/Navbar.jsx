@@ -37,7 +37,7 @@ const Navbar = ({ cartItemCount }) => {
       </div>
 
       <div className="ml-4">
-      <a href="/"><img src="Logo.png" alt="Logo" className="h-14" /></a>
+      <a href="/"><img src="Logo.png" alt="Logo" className="h-10 md:h-14" /></a>
       </div>
 
       <div className="hidden lg:flex gap-24 font-Nunito">
