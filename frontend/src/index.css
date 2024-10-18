@@ -13,21 +13,21 @@
   }
 
   .status-received {
-    background-color: orange; /* Blue */
+    background-color: rgb(233, 144, 255); /* Blue */
   }
   
   .status-processing {
-    background-color: rgb(119, 119, 214); /* Yellow */
+    background-color: rgb(138, 138, 205); /* Yellow */
   }
   
   .status-shipped {
-    background-color:yellow ; /* Cyan */
+    background-color:rgb(247, 247, 167) ; /* Cyan */
   }
   
   .status-delivered {
-    background-color: rgb(92, 205, 92); /* Green */
+    background-color: rgb(122, 213, 122); /* Green */
   }
   
   .status-cancelled {
-    background-color: #ef606e; /* Red */
+    background-color  : #c3646d; /* Red */
   }

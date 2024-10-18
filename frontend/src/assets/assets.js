@@ -41,14 +41,27 @@ const seemai1 =
 const seemai2 =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/seemai2.png";
 const crunchy =
-  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/crunchy.png";
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/cruncher_secondary.png";
 const choco2 =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/bounty2.png";
 const assortedkaju1 =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/secondary%20image.png";
 const assortedkaju2 =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/assortedkaju2.png";
-
+const assortedghee =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/assortedghee.png";
+const royal1 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/royal1.png";
+const royal2 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/royal2.png";
+const chocodip1 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/chocodip1.png";
+const chocodip2 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/chocodip2.png";
+const dryfruits =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/dryfruits.png";
+const pistaroll = "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/pistaroll1.png"
+const pistaroll2 = "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/pistaroll2.png"
 import star from "./star 3.svg";
 
 export const assets = {};
@@ -119,7 +132,7 @@ export const food_list = [
     ],
     category: "Sweets",
     life: "5 Days",
-    gst:5
+    gst: 5,
   },
   {
     _id: "2",
@@ -137,16 +150,9 @@ export const food_list = [
   },
   {
     _id: "3",
-    name: "Royal Fruits and Nuts",
-    description: "",
-    image: [
-      fruitpack,
-      kajupineapple,
-      kajumango,
-      strawberry,
-      blueberry,
-      datesroll,
-    ],
+    name: "Royal Fruits and Nuts | Real Fruit Sweets | Fruit and Nut Sweets",
+    description: "Luscious fruits, sun-kissed and dried, entwined with exquisite nuts, artfully crafted into a healthy, delectable treasure.",
+    image: [royal1, royal2],
     weights: [
       { weight: "500G", price: 715, mrp: 750, gst: 35.75 },
       { weight: "1 KG", price: 1429, mrp: 1500, gst: 71.45 },
@@ -170,31 +176,24 @@ export const food_list = [
   },
   {
     _id: "5",
-    name: "Assorted Kaju Sweets",
+    name: "Mix Kaju Sweets | Assorted Kaju Sweets",
     description:
-      "Mixed & Ghee sweets such as Ghee mysore pak, kesar peda, white peda, motichoor laddu, doda burfee, gujiya, milk cake, soan papdi and milk burfee will be packed as per the availability of the items at the store currently. Note: the mentioned items are not guranteed. ",
+      "Assortment of Sweets made majorly from Cashew Nut and its paste variegated with add-on such as Rose Petals, Butterscotch, Dry Fruits, Real Fruits, Pistachio, Chocolate and Badam. ",
     image: [assortedkaju1, assortedkaju2],
-    weights: [
-      { weight: "500G", price: 430, mrp: 1240, gst: 21.5 },
-      { weight: "1 KG", price: 810, mrp: 1240, gst: 40.5 },
-    ],
+    weights: [{ weight: "1Nos", price: 197, mrp: 197, gst: 9.85 }],
     category: "Sweets",
-    life: "5 Days",
+    life: "15 Days",
     gst: 5,
   },
   {
     _id: "6",
-    name: "Assorted Ghee sweets",
+    name: "Mix Ghee Sweets | Assorted Ghee Sweets ",
     description:
-      "Fresh Sabudhana comes Roasted peanuts, Sev, and Mixture. Made with Air Fryer Technology.",
-    image: [food_3],
-    weights: [
-      { weight: "250G", price: 357, mrp: 375, gst: 42.84 },
-      { weight: "500G", price: 715, mrp: 750, gst: 85.8 },
-      { weight: "1 KG", price: 1429, mrp: 1500, gst: 171.48 },
-    ],
+      "Assorted Ghee Sweets Box – A delightful selection of traditional Indian sweets, made with a mix of besan (gram flour), wheat, maida (refined flour), and daal, all cooked in pure ghee.",
+    image: [assortedghee],
+    weights: [{ weight: "1NOs", price: 127, mrp: 127, gst: 42.84 }],
     category: "Sweets",
-    life: "5 Days",
+    life: "10 Days",
     gst: 12,
   },
   // {
@@ -213,14 +212,14 @@ export const food_list = [
   {
     _id: "8",
     name: "Foxtail Mixture | Seemai Thinai Mixture | Millet Mixture",
-    description: "",
+    description: "Experience the wholesome goodness of Seemai Thinai Mixture, a delicious blend of crispy grains, nuts, and spices. Made with the finest Seemai Thinai (Quinoa), this healthy snack is perfect for guilt-free munching anytime. Enjoy a burst of traditional flavors with every bite!",
     image: [seemai1, seemai2],
     weights: [
       { weight: "100G", price: 53, mrp: 80, gst: 6.36 },
       { weight: "250G", price: 133, mrp: 200, gst: 15.96 },
     ],
     category: "Savouries",
-    life: "1 Months",
+    life: "1 Month",
     gst: 12,
   },
 
@@ -254,7 +253,7 @@ export const food_list = [
     _id: "11",
     name: "Dry Fruit Sweets",
     description: "Dry Fruits such like Kiwi, Strawberry",
-    image: [kiwi, strawberry],
+    image: [dryfruits, kiwi, strawberry],
     weights: [
       { weight: "250G", price: 357, mrp: 375, gst: 17.85 },
       { weight: "500G", price: 715, mrp: 750, gst: 35.75 },
@@ -290,7 +289,7 @@ export const food_list = [
     _id: "14",
     name: "Choco Dip Badam | Chocolate Badam",
     description: " Roasted Amond Coated with Chocolate.",
-    image: [almond],
+    image: [chocodip1,chocodip2],
     weights: [{ weight: "150G", price: 225, mrp: 300, gst: 11.25 }],
     category: "Sweets",
     life: "2 Months",
@@ -301,7 +300,7 @@ export const food_list = [
     name: "Pista Roll |  Kaju Pista Roll",
     description:
       "A divine fusion of cashew and pistachio, ground into a velvety paste and crafted into a single, exquisite roll, delicately sweetened, creates a heavenly delight for dessert lovers. With no artificial colors, only the essence of nature's finest ingredients graces this enchanting treat.",
-    image: [almond],
+    image: [pistaroll,pistaroll2],
     weights: [
       { weight: "500G", price: 715, mrp: 750, gst: 11.25 },
       { weight: "1KG", price: 1429, mrp: 1500, gst: 5 },
