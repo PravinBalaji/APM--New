@@ -11,3 +11,23 @@
       @apply absolute content-[''] sm:w-full h-0.5 bg-[#F7AE1C] left-0 bottom-[-5px] rounded-md scale-x-100 origin-bottom-right hover:origin-bottom-left transition-transform duration-500;
     }
   }
+
+  .status-received {
+    background-color: orange; /* Blue */
+  }
+  
+  .status-processing {
+    background-color: rgb(119, 119, 214); /* Yellow */
+  }
+  
+  .status-shipped {
+    background-color:yellow ; /* Cyan */
+  }
+  
+  .status-delivered {
+    background-color: rgb(92, 205, 92); /* Green */
+  }
+  
+  .status-cancelled {
+    background-color: #ef606e; /* Red */
+  }

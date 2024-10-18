@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { CartContext } from '../context/CartContext'; // Adjust the import path as needed
-import axios from 'axios';
+import React, { useContext, useState, useEffect } from "react";
+import { CartContext } from "../context/CartContext"; // Adjust the import path as needed
+import axios from "axios";
 
 const AddressForm = ({ onClose, setHasVerified }) => {
   const { formData, updateFormData, addAddress } = useContext(CartContext);
@@ -16,32 +16,36 @@ const AddressForm = ({ onClose, setHasVerified }) => {
   useEffect(() => {
     setIsFormValid(
       formData.name &&
-      formData.mobile &&
-      formData.pincode &&
-      formData.addressLine1 &&
-      isAddressAvailable
+        formData.mobile &&
+        formData.pincode &&
+        formData.addressLine1 &&
+        formData.addressLine2 &&
+        formData.city &&
+        formData.state &&
+        isAddressAvailable
     );
   }, [formData, isAddressAvailable]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     updateFormData({ [name]: value });
-    if (name === 'pincode') {
+    if (name === "pincode") {
       setIsAddressAvailable(null);
     }
   };
 
-
-
   const handleVerifyAddress = async () => {
     setIsVerifying(true);
     try {
-      const response = await axios.post('https://www.annapoornamithai.com/feature/checkPincode',{
-        pincode : formData.pincode
-      });
+      const response = await axios.post(
+        "https://www.annapoornamithai.com/feature/checkPincode",
+        {
+          pincode: formData.pincode,
+        }
+      );
       setIsAddressAvailable(response.data.status);
     } catch (error) {
-      console.error('Error verifying address:', error);
+      console.error("Error verifying address:", error);
       setIsAddressAvailable(false);
     }
     setIsVerifying(false);
@@ -59,7 +63,7 @@ const AddressForm = ({ onClose, setHasVerified }) => {
   // Calculate the minimum date for pre-order (1 week from today)
   const minDate = new Date();
   minDate.setDate(minDate.getDate() + 7);
-  const minDateString = minDate.toISOString().split('T')[0];
+  const minDateString = minDate.toISOString().split("T")[0];
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -68,14 +72,16 @@ const AddressForm = ({ onClose, setHasVerified }) => {
           <img src="closeoverlay.svg" alt="Close" />
         </button>
         <h2 className="text-xl font-bold mb-4 flex items-center">
-          <span className="mr-2">←</span> Personal & Delivery Address
+          <span className="mr-2"></span> Personal & Delivery Address
         </h2>
         <p className="text-sm text-gray-600 mb-6">
-          Please enter the required details to create your account
+          Please enter the all details to create your account
         </p>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <h3 className="text-sm font-semibold text-[#FAAF40] mb-2">PERSONAL DETAILS*</h3>
+            <h3 className="text-sm font-semibold text-[#FAAF40] mb-2">
+              PERSONAL DETAILS*
+            </h3>
             <input
               type="text"
               name="name"
@@ -107,14 +113,16 @@ const AddressForm = ({ onClose, setHasVerified }) => {
               className="w-full p-2 border rounded"
             />
           </div>
-          <h3 className="text-sm font-semibold text-[#FAAF40] mb-2">DELIVERY DETAILS*</h3>
+          <h3 className="text-sm font-semibold text-[#FAAF40] mb-2">
+            DELIVERY DETAILS*
+          </h3>
           <div className="mb-4">
             <input
               type="text"
               name="addressLine1"
               value={formData.addressLine1}
               onChange={handleChange}
-              placeholder="Enter your Address"
+              placeholder="Door no./Street"
               className="w-full p-2 border rounded"
               required
             />
@@ -122,16 +130,38 @@ const AddressForm = ({ onClose, setHasVerified }) => {
           <div className="mb-4">
             <input
               type="text"
-              name="landmark"
-              value={formData.landmark}
+              name="addressLine2"
+              value={formData.addressLine2}
               onChange={handleChange}
-              placeholder="Place"
+              placeholder="Address Line 2"
               className="w-full p-2 border rounded"
+              required
             />
           </div>
-          
+
+          <div className="flex gap-2">
+            <div className="mb-4">
+              <input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                placeholder="Enter your city"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+            <div className="mb-4">
+              <input
+                type="text"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                placeholder="Enter your state"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+          </div>
           <div className="mb-4">
-            
             <input
               type="text"
               name="pincode"
@@ -150,17 +180,23 @@ const AddressForm = ({ onClose, setHasVerified }) => {
                   checked={isVerifying}
                   onChange={handleVerifyAddress}
                   className="mr-2"
-                />  
+                />
                 Check Address Availability
               </label>
             </div>
           )}
           {isAddressAvailable !== null && (
-            <div className={`mb-4 ${isAddressAvailable ? 'text-green-600' : 'text-red-600'}`}>
-              {isAddressAvailable ? 'Address is available' : 'Address is not available'}
+            <div
+              className={`mb-4 ${
+                isAddressAvailable ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {isAddressAvailable
+                ? "Address is available"
+                : "Address is not available"}
             </div>
           )}
-          
+
           {/* <div className="mb-4">
             <h3 className="text-sm font-semibold text-[#FAAF40] mb-2">PRE-ORDER OPTION</h3>
             <select
@@ -188,7 +224,9 @@ const AddressForm = ({ onClose, setHasVerified }) => {
           <button
             type="submit"
             className={`w-full font-bold py-3 px-4 rounded-lg ${
-              isFormValid ? 'bg-[#332D21] text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              isFormValid
+                ? "bg-[#332D21] text-white"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
             disabled={!isFormValid}
           >

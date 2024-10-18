@@ -54,6 +54,12 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
     return weightOption ? weightOption.mrp : 0;
   };
 
+  const gstValue = () => {
+    if (!selectedItem || !selectedWeight) return 0;
+    const weightOption = selectedItem.weights.find(w => w.weight === selectedWeight);
+    return weightOption ? weightOption.gst : 0;
+  }
+
   const handleAddToCart = () => {
     if (!selectedItem) return;
     const cartItem = {
@@ -65,9 +71,11 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
       image: selectedItem.image,
       category : selectedItem.category,
       gst : selectedItem.gst,
-      mrp : getmrpPrice()*quantity
+      mrp : getmrpPrice()*quantity,
+      gstValue : gstValue()*quantity
     };
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+    console.log(cartItem)
     existingCart.push(cartItem);
     localStorage.setItem("cart", JSON.stringify(existingCart));
     const event = new Event("storage");
@@ -87,7 +95,8 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
       image: selectedItem.image,
       category: selectedItem.category,
       gst : selectedItem.gst,
-      mrp : getmrpPrice() * quantity
+      mrp : getmrpPrice() * quantity,
+      gstValue : gstValue()*quantity
     };
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
     existingCart.push(cartItem);

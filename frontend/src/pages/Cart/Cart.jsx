@@ -15,6 +15,8 @@ import CartHeader from "../../components/CartHeader";
 import AddressForm from "../../components/AddressForm";
 import VerificationSuccess from "../../components/VerificationSuccess";
 import SignupForm from "../../components/Signup";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 const CartPage = () => {
   const {
     cartItems,
@@ -42,6 +44,7 @@ const CartPage = () => {
   const navigate = useNavigate();
   const [isPreOrder, setIsPreOrder] = useState(false);
   const [preOrderDate, setPreOrderDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const [showSignup, setShowSignup] = useState(false);
   const handleSignup = () => {
@@ -109,11 +112,16 @@ const CartPage = () => {
       const authToken = localStorage.getItem("authToken");
       const address =
         formData.addressLine1 +
+        ", " +
+        formData.addressLine2 +
         " " +
-        formData.landmark +
-        "," +
+        formData.city +
+        ", " +
+        formData.state +
+        ", " +
         formData.pincode;
       // Make sure authToken exists
+      console.log(address)
       if (!authToken) {
         throw new Error("No authentication token found. Please log in.");
       }
@@ -149,7 +157,7 @@ const CartPage = () => {
 
       // Step 2: Initiate the Razorpay payment
       const options = {
-        key: "rzp_live_RrwwvKN9oKC1xQ",
+        key: "",
         amount: order.amount,
         currency: "INR",
         name: "Annapoorna Mithai",
@@ -173,13 +181,15 @@ const CartPage = () => {
                 orderItems: cartItems,
                 totalAmount: subtotal.toFixed(2),
                 gst: gst.toFixed(2),
+                sweetGST: sweetsGST,
+                savoriesGST: savouriesGST,
                 delivery: delivery,
                 email: formData.email,
                 userName: formData.name,
                 address: address,
                 mobile: formData.mobile,
                 user_mobile: inputValue,
-                preorderDate: preOrderDate,
+                preorderDate: selectedDate,
               },
               {
                 withCredentials: true,
@@ -304,22 +314,36 @@ const CartPage = () => {
   };
 
   const calculateGST = () => {
-    return cartItems.reduce((total, item) => {
-      const gstRate = item.category == "Sweets" ? 0.05 : 0.12; // 5% for Sweets, 12% for Savouries
-      console.log("Category:" + item.category);
-      console.log(item);
-      return total + item.price * item.quantity * gstRate;
-    }, 0);
+    let sweetsGST = 0;
+    let savouriesGST = 0;
+
+    cartItems.forEach((item) => {
+      if (item.category === "Sweets") {
+        sweetsGST += item.price * item.quantity * 0.05;
+      } else if (item.category === "Savouries") {
+        savouriesGST += item.price * item.quantity * 0.12;
+      }
+    });
+
+    const totalGST = sweetsGST + savouriesGST;
+
+    return { sweetsGST, savouriesGST, totalGST };
   };
+
+  const { sweetsGST, savouriesGST, totalGST } = calculateGST();
+
   const calculateItemSavings = (item) => {
     return (item.mrp - item.price) * item.quantity;
   };
   const calculateTotalSavings = () => {
-    return cartItems.reduce((total, item) => total + calculateItemSavings(item), 0);
-  };  
+    return cartItems.reduce(
+      (total, item) => total + calculateItemSavings(item),
+      0
+    );
+  };
   const calculateFinalAmount = () => {
     const subtotal = calculateSubtotal();
-    const gst = calculateGST();
+    const gst = totalGST;
     // const gst = 0;
     const delivery = 100;
     return {
@@ -493,14 +517,25 @@ const CartPage = () => {
                     <label className="text-[14px] font-semibold block mb-1">
                       Select Pre-order Date:
                     </label>
-                    <input
+                    {/* <input
                       type="date"
                       value={preOrderDate}
                       onChange={handlePreOrderDateChange}
                       min={minDateString}
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border rounded appearance-none"
+                      style={{
+                        WebkitAppearance: "none",
+                        MozAppearance: "textfield",
+                      }}
                       required
-                    />
+                    /> */}
+                    <DatePicker
+                      selected={selectedDate}
+                      onChange={(date) => setSelectedDate(date)}
+                      dateFormat="dd/MM/yyyy"
+                      minDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)}
+                      className="w-full rounded-lg bg-[#ffff] border p-4 border-[#000000] h-10"
+                    ></DatePicker>
                   </div>
                 )}
               </div>

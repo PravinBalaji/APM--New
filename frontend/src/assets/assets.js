@@ -5,7 +5,7 @@ import food_4 from "./food_4.svg";
 import Makhana from "./Makhana.jpg";
 import CreamMakhana from "./Creammakhana.jpg";
 const choco =
-  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/main/chocobounty.png";
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/bounty1.png";
 const kaju =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/main/kajukatli.png";
 const almond =
@@ -25,8 +25,9 @@ const kajumango =
 const datesroll =
   "https://raw.githubusercontent.com/Warlord09/annapoorna-images/main/dates roll/8.png";
 const wheatpop1 =
-  "https://raw.githubusercontent.com/Warlord09/annapoorna-images/main/wheat pop/5.png";
-  const wheatpop2 = "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/wheatpop1.png"
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/wheatpop1.png";
+const wheatpop2 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/wheatpop2.png";
 const pistacrunch =
   "https://raw.githubusercontent.com/Warlord09/annapoorna-images/main/pista crunch/3.png";
 const kiwi =
@@ -35,12 +36,18 @@ const strawberry =
   "https://raw.githubusercontent.com/Warlord09/annapoorna-images/main/strawberry delight/4.png";
 const fruitpack =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/main/fruitpack.png";
-const seemai1 = "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/seemai1.png"
-const seemai2 = "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/seemai2.png"
-const crunchy = "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/crunchy.png"
-const choco2 = "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/choco2.png"
-const assortedkaju1 = "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/assortedkaju1.png"
-const assortedkaju2 = "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/assortedkaju2.png"
+const seemai1 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/seemai1.png";
+const seemai2 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/seemai2.png";
+const crunchy =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/crunchy.png";
+const choco2 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/bounty2.png";
+const assortedkaju1 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/secondary%20image.png";
+const assortedkaju2 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/assortedkaju2.png";
 
 import star from "./star 3.svg";
 
@@ -102,21 +109,24 @@ export const food_list = [
   {
     _id: "1",
     name: "Kaju Katli | Kaju Barfi | Diamond Sweet",
-    description : "Crispy Cashew nuts soaked then grinded into fine dough and elegantly served with Pure silver leaf",
+    description:
+      "Crispy Cashew nuts soaked then grinded into fine dough and elegantly served with Pure silver leaf",
     image: [kaju],
     weights: [
-      { weight: "250G", price: 310, mrp: 326, gst: 15 },
+      { weight: "250G", price: 310, mrp: 326, gst: 15.5 },
       { weight: "500G", price: 620, mrp: 651, gst: 31 },
       { weight: "1 KG", price: 1240, mrp: 1302, gst: 62 },
     ],
     category: "Sweets",
     life: "5 Days",
+    gst:5
   },
   {
     _id: "2",
     name: "Choco Bounty | Coconut sweet | Bounty Chocolate",
-    description : 'Fresh gratted coconut with the condensed milk wrapped with Fresh Chocolate.',
-    image: [choco2,choco],
+    description:
+      "Fresh gratted coconut with the condensed milk wrapped with Fresh Chocolate.",
+    image: [choco2, choco],
     weights: [
       { weight: "500G", price: 348, mrp: 365, gst: 17.4 },
       { weight: "1 KG", price: 695, mrp: 730, gst: 34.75 },
@@ -128,7 +138,7 @@ export const food_list = [
   {
     _id: "3",
     name: "Royal Fruits and Nuts",
-    description : "",
+    description: "",
     image: [
       fruitpack,
       kajupineapple,
@@ -148,8 +158,8 @@ export const food_list = [
   {
     _id: "4",
     name: "Nuts Cruncher |  Layered Nuts Sweet ",
-    description : "Almond Crunch, Pista Crunch and Cashew Crunch",
-    image: [crunchy,almond, pistacrunch, cashew],
+    description: "Almond Crunch, Pista Crunch and Cashew Crunch",
+    image: [crunchy, almond, pistacrunch, cashew],
     weights: [
       { weight: "500G", price: 715, mrp: 750, gst: 35.75 },
       { weight: "1 KG", price: 1429, mrp: 1500, gst: 71.45 },
@@ -161,8 +171,9 @@ export const food_list = [
   {
     _id: "5",
     name: "Assorted Kaju Sweets",
-    description:"Mixed & Ghee sweets such as Ghee mysore pak, kesar peda, white peda, motichoor laddu, doda burfee, gujiya, milk cake, soan papdi and milk burfee will be packed as per the availability of the items at the store currently. Note: the mentioned items are not guranteed. ",
-    image: [assortedkaju1,assortedkaju2],
+    description:
+      "Mixed & Ghee sweets such as Ghee mysore pak, kesar peda, white peda, motichoor laddu, doda burfee, gujiya, milk cake, soan papdi and milk burfee will be packed as per the availability of the items at the store currently. Note: the mentioned items are not guranteed. ",
+    image: [assortedkaju1, assortedkaju2],
     weights: [
       { weight: "500G", price: 430, mrp: 1240, gst: 21.5 },
       { weight: "1 KG", price: 810, mrp: 1240, gst: 40.5 },
@@ -174,7 +185,8 @@ export const food_list = [
   {
     _id: "6",
     name: "Assorted Ghee sweets",
-    description:"Fresh Sabudhana comes Roasted peanuts, Sev, and Mixture. Made with Air Fryer Technology.",
+    description:
+      "Fresh Sabudhana comes Roasted peanuts, Sev, and Mixture. Made with Air Fryer Technology.",
     image: [food_3],
     weights: [
       { weight: "250G", price: 357, mrp: 375, gst: 42.84 },
@@ -201,8 +213,8 @@ export const food_list = [
   {
     _id: "8",
     name: "Foxtail Mixture | Seemai Thinai Mixture | Millet Mixture",
-    description : "",
-    image: [seemai1,seemai2],
+    description: "",
+    image: [seemai1, seemai2],
     weights: [
       { weight: "100G", price: 53, mrp: 80, gst: 6.36 },
       { weight: "250G", price: 133, mrp: 200, gst: 15.96 },
@@ -214,8 +226,9 @@ export const food_list = [
 
   {
     _id: "9",
-    name: "Oma podi",
-    description: " Omapodi is a delicious and crispy South Indian snack of sev laced with the aroma and flavor of ajwain or carom seeds.",
+    name: "Oma Podi | South Indian Bhujiya | Nylon Sev",
+    description:
+      " Omapodi is a delicious and crispy South Indian snack of sev laced with the aroma and flavor of ajwain or carom seeds.",
     image: [omapodi],
     weights: [
       { weight: "100G", price: 53, mrp: 80, gst: 6.36 },
@@ -228,8 +241,9 @@ export const food_list = [
   {
     _id: "10",
     name: "Wheat pop",
-    description : "Fresh Whole Wheat made into puff with Air Fryer Cooking Technology - One of the Best low calorie Snack. ",
-    image: [wheatpop1,wheatpop2],
+    description:
+      "Fresh Whole Wheat made into puff with Air Fryer Cooking Technology - One of the Best low calorie Snack. ",
+    image: [wheatpop1, wheatpop2],
     weights: [{ weight: "100G", price: 62, mrp: 95, gst: 7.44 }],
     category: "Savouries",
     life: "2 Months",
@@ -253,7 +267,8 @@ export const food_list = [
   {
     _id: "12",
     name: "Cheese Makhanas",
-    description : " Popped water lily (Lotus) seeds roasted with whole whear flour, Citric Acid, Cheddar cheese & S",
+    description:
+      " Popped water lily (Lotus) seeds roasted with whole whear flour, Citric Acid, Cheddar cheese & S",
     image: [Makhana],
     weights: [{ weight: "80G", price: 170, mrp: 240, gst: 20.4 }],
     category: "Savouries",
@@ -263,7 +278,8 @@ export const food_list = [
   {
     _id: "13",
     name: "Cream Onion Makhana",
-    description : "Popped water lily (Lotus) seeds roasted with Dried White Onion, Parshlay, Chilli, Butter & slat",
+    description:
+      "Popped water lily (Lotus) seeds roasted with Dried White Onion, Parshlay, Chilli, Butter & slat",
     image: [CreamMakhana],
     weights: [{ weight: "80G", price: 170, mrp: 240, gst: 20.4 }],
     category: "Savouries",
@@ -272,12 +288,26 @@ export const food_list = [
   },
   {
     _id: "14",
-    name: "Choco Dip Badam",
+    name: "Choco Dip Badam | Chocolate Badam",
     description: " Roasted Amond Coated with Chocolate.",
     image: [almond],
     weights: [{ weight: "150G", price: 225, mrp: 300, gst: 11.25 }],
     category: "Sweets",
     life: "2 Months",
+    gst: 5,
+  },
+  {
+    _id: "15",
+    name: "Pista Roll |  Kaju Pista Roll",
+    description:
+      "A divine fusion of cashew and pistachio, ground into a velvety paste and crafted into a single, exquisite roll, delicately sweetened, creates a heavenly delight for dessert lovers. With no artificial colors, only the essence of nature's finest ingredients graces this enchanting treat.",
+    image: [almond],
+    weights: [
+      { weight: "500G", price: 715, mrp: 750, gst: 11.25 },
+      { weight: "1KG", price: 1429, mrp: 1500, gst: 5 },
+    ],
+    category: "Sweets",
+    life: "15 Days",
     gst: 5,
   },
 ];
