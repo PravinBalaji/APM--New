@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../context/CartContext"; // Adjust the import path as needed
 import axios from "axios";
 
-const AddressForm = ({ onClose, setHasVerified }) => {
+const AddressForm = ({ onClose, setHasVerified,handlePlaceOrder }) => {
   const { formData, updateFormData, addAddress } = useContext(CartContext);
   const [showVerifyCheckbox, setShowVerifyCheckbox] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
@@ -57,6 +57,7 @@ const AddressForm = ({ onClose, setHasVerified }) => {
       addAddress();
       onClose();
       setHasVerified(false);
+      handlePlaceOrder();
     }
   };
 
@@ -230,7 +231,7 @@ const AddressForm = ({ onClose, setHasVerified }) => {
             }`}
             disabled={!isFormValid}
           >
-            Proceed to next
+            Proceed to Payment
           </button>
         </form>
       </div>

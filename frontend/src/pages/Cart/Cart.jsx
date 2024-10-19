@@ -105,6 +105,10 @@ const CartPage = () => {
     }
   }, []);
 
+  const handleAddressForm = () => {
+    setShowAddressForm(true);
+  }
+
   const handlePlaceOrder = async () => {
     try {
       setButtonPressed(true);
@@ -160,7 +164,7 @@ const CartPage = () => {
 
       // Step 2: Initiate the Razorpay payment
       const options = {
-        key: "",
+        key: "rzp_test_ZyVKG8K6k1Gol1",
         amount: order.amount,
         currency: "INR",
         name: "Annapoorna Mithai",
@@ -398,10 +402,10 @@ const CartPage = () => {
                 </div>
                 <div>
                   <h1 className="font-Nunito font-semibold text-[12px] px-3 pt-1 text-[#909090]">
-                    {formData.addressLine1}
+                    {formData.addressLine1}, {formData.addressLine2}
                   </h1>
                   <h1 className="font-Nunito font-semibold text-[12px] px-3 pb-3 text-[#909090]">
-                    {formData.landmark}-{formData.pincode}
+                    {formData.city}-{formData.pincode}
                   </h1>
                 </div>
               </div>
@@ -551,7 +555,7 @@ const CartPage = () => {
                   </p>
                 )}
                 <button
-                  onClick={loggedin ? handlePlaceOrder : handleSendOtp}
+                  onClick={loggedin ? handleAddressForm : handleSendOtp}
                   className={`w-full font-bold py-3 px-4 rounded-lg ${
                     meetsMinimumOrder()
                       ? "bg-[#332D21] text-white"
@@ -651,6 +655,7 @@ const CartPage = () => {
           <AddressForm
             onClose={() => setShowAddressForm(false)}
             setHasVerified={setHasVerified}
+            handlePlaceOrder={handlePlaceOrder}
           />
         </div>
       )}

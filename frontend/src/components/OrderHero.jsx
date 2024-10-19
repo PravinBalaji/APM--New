@@ -8,6 +8,7 @@ const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  
   const handleGetRequest = async () => {
     try {
       const authToken = localStorage.getItem("authToken");
@@ -27,6 +28,16 @@ const OrdersPage = () => {
       console.error("Error fetching orders:", error);
     }
   };
+
+  useEffect(() => {
+    handleGetRequest(); // Initial fetch
+
+    const intervalId = setInterval(() => {
+      handleGetRequest(); // Fetch orders every 30 seconds
+    }, 30000);
+
+    return () => clearInterval(intervalId); // Cleanup on component unmount
+  }, [inputValue]);
 
   const handleCancelOrder = async (order_id) => {
     try {
@@ -69,7 +80,7 @@ const OrdersPage = () => {
         <div>
           <p className="font-bold text-[12px]">ORDER ID: {order.order_id}</p>
           <p className="text-[#909090] text-[10px]">
-            Ordered on {new Date(order.created_at).toLocaleString()}
+            Ordered on {new Date(order.received_date).toLocaleString()}
           </p>
         </div>
         {order.preorder_date == null ? (
