@@ -201,7 +201,7 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
                     onClick={() => setSelectedShell(!selectedShell)}
                   >
                     <p className="font-Nunito font-bold text-[12px] md:text-[14px] text-[#909090]">
-                      SHELL LIFE:
+                      SHELF LIFE:
                     </p>
                     {selectedShell ? (
                       <img src="down.svg" className="cursor-pointer" />
@@ -248,8 +248,8 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
               </div>
 
                   <div className="flex items-center gap-2 mt-4 justify-between mb-16 md:mb-4">
-                    <p className="text-[14px] font-bold text-[#606060] font-Nunito">
-                      ₹{getWeightPrice() }{" "}<span className="line-through">₹{getmrpPrice()}</span>
+                    <p className="text-[17px] font-bold text-[#000000] font-Nunito">
+                      ₹{getWeightPrice() }{" "}<span className="line-through text-[#606060] text-[14px]">₹{getmrpPrice()}</span>
                       <p className="text-[14px] font-bold text-[#26A460] font-Nunito">
                         You save ₹{getmrpPrice()-getWeightPrice()}
                       </p>

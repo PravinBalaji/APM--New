@@ -73,7 +73,7 @@ const CartPage = () => {
       console.log("Sending OTP to:", inputValue);
       const response = await axios.post(
         "https://www.annapoornamithai.com/customers/send-otp",
-        { email: inputValue },
+        { mobile: inputValue },
 
         { withCredentials: true }
       );
@@ -108,6 +108,7 @@ const CartPage = () => {
   const handlePlaceOrder = async () => {
     try {
       setButtonPressed(true);
+      setShowAddressForm(true);
       console.log(document.cookie); // This might not show HttpOnly cookies
       console.log(cartItems);
       // Step 1: Create an order in your backend to get an order ID

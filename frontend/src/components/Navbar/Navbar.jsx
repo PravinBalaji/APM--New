@@ -36,8 +36,8 @@ const Navbar = ({ cartItemCount }) => {
         )}
       </div>
 
-      <div className="ml-4">
-      <a href="/"><img src="Logo.png" alt="Logo" className="h-10 md:h-14" /></a>
+      <div className="">
+      <a href="/"><img src="Logo.png" alt="Logo" className="h-[50px] md:h-14" /></a>
       </div>
 
       <div className="hidden lg:flex gap-24 font-Nunito">
@@ -67,16 +67,16 @@ const Navbar = ({ cartItemCount }) => {
         </h1>
       </div>
 
-      <div className="flex gap-10 h-6 mr-4">
+      <div className="flex gap-6 lg:gap-10 h-6 lg:mr-4">
         
         <div
           className={`cursor-pointer ${selected === 'profile' ? '' : ''}`}
           onClick={() => handleSelect('profile')}
         >
-          <img src="Profile.png" className="lg:w-[30px] lg:h-[30px] w-[24px] h-[24px] text-[#70513A]" />
+          <img src="Profile.png" className="lg:w-[30px] lg:h-[30px] w-[30px] h-[30px] text-[#70513A]" />
         </div>
         <div className="relative cursor-pointer" onClick={() => handleSelect('cart')}>
-          <img src="Cart.svg" className="lg:w-[30px] lg:h-[30px] w-[24px] h-[24px] text-[#70513A]" />
+          <img src="Cart.svg" className="lg:w-[30px] lg:h-[30px] w-[30px] h-[30px] text-[#70513A]" />
           {cartItemCount > 0 && (
             <div className="absolute top-[-6px] right-[-4px] bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
               {cartItemCount}

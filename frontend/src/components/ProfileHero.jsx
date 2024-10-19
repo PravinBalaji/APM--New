@@ -289,7 +289,7 @@ const [showSignup, setShowSignup] = useState(false);
             <div className="mt-6 bg-white rounded-lg p-6 shadow">
               <ul className="space-y-4">
                 <li className="flex items-center">
-                  <span className="mr-2">📍</span> Delivery Address
+                 <a href="#address-division"> <span className="mr-2">📍</span> Delivery Address</a>
                 </li>
                 <li
                   className="flex items-center cursor-pointer"
@@ -337,7 +337,7 @@ const [showSignup, setShowSignup] = useState(false);
 
           {/* Right side - Address Form */}
           <div className="md:w-2/3">
-            <h2 className="text-xl font-bold mb-4">
+            <h2 className="text-xl font-bold mb-4" id="address-division">
               Personal & Delivery Address
             </h2>
             <p className="text-sm text-gray-600 mb-6">

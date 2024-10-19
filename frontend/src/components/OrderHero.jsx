@@ -12,7 +12,7 @@ const OrdersPage = () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const response = await axios.get(
-        `https://www.annapoornamithai.com/customers/orders?email=${inputValue}`,
+        `https://www.annapoornamithai.com/customers/orders?mobile=${inputValue}`,
         {
           withCredentials: true,
           headers: {
