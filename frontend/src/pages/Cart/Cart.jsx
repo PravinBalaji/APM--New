@@ -197,6 +197,7 @@ const CartPage = () => {
                 mobile: formData.mobile,
                 user_mobile: inputValue,
                 preorderDate: selectedDate,
+                state: formData.state,
               },
               {
                 withCredentials: true,
