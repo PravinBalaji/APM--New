@@ -108,7 +108,7 @@ const CartPage = () => {
   const handlePlaceOrder = async () => {
     try {
       setButtonPressed(true);
-      setShowAddressForm(true);
+      // setShowAddressForm(true);
       console.log(document.cookie); // This might not show HttpOnly cookies
       console.log(cartItems);
       // Step 1: Create an order in your backend to get an order ID
