@@ -50,7 +50,7 @@ const [showSignup, setShowSignup] = useState(false);
       console.log("Sending OTP to:", inputValue);
       const response = await axios.post(
         "https://www.annapoornamithai.com/customers/send-otp",
-        { email: inputValue },
+        { mobile: inputValue },
         { withCredentials: true }
       );
       console.log("OTP send response:", response.data);
@@ -289,7 +289,7 @@ const [showSignup, setShowSignup] = useState(false);
             <div className="mt-6 bg-white rounded-lg p-6 shadow">
               <ul className="space-y-4">
                 <li className="flex items-center">
-                  <span className="mr-2">📍</span> Delivery Address
+                 <a href="#address-division"> <span className="mr-2">📍</span> Delivery Address</a>
                 </li>
                 <li
                   className="flex items-center cursor-pointer"
@@ -337,7 +337,7 @@ const [showSignup, setShowSignup] = useState(false);
 
           {/* Right side - Address Form */}
           <div className="md:w-2/3">
-            <h2 className="text-xl font-bold mb-4">
+            <h2 className="text-xl font-bold mb-4" id="address-division">
               Personal & Delivery Address
             </h2>
             <p className="text-sm text-gray-600 mb-6">
@@ -384,12 +384,13 @@ const [showSignup, setShowSignup] = useState(false);
                 <h3 className="text-sm font-semibold text-[#FAAF40] mb-2">
                   DELIVERY DETAILS*
                 </h3>
+                <div className="mb-4">
                 <input
                   type="text"
-                  name="pincode"
-                  value={localFormData.pincode || ""}
+                  name="addressLine1"
+                  value={localFormData.addressLine1 || ""}
                   onChange={handleChange}
-                  placeholder="Pin code"
+                  placeholder="Door No. / Street"
                   className="w-full p-2 border rounded"
                   required
                 />
@@ -397,24 +398,45 @@ const [showSignup, setShowSignup] = useState(false);
               <div className="mb-4">
                 <input
                   type="text"
-                  name="landmark"
-                  value={localFormData.landmark || ""}
+                  name="addressLine2"
+                  value={localFormData.addressLine2 || ""}
                   onChange={handleChange}
-                  placeholder="Landmark"
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div className="mb-6">
-                <input
-                  type="text"
-                  name="addressLine1"
-                  value={localFormData.addressLine1 || ""}
-                  onChange={handleChange}
-                  placeholder="Address"
+                  placeholder="Address Line 2"
                   className="w-full p-2 border rounded"
                   required
                 />
               </div>
+                
+              </div>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  name="city"
+                  value={localFormData.city || ""}
+                  onChange={handleChange}
+                  placeholder="City"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  name="state"
+                  value={localFormData.state || ""}
+                  onChange={handleChange}
+                  placeholder="State"
+                  className="w-full p-2 border rounded "
+                />
+              </div>
+              <input
+                  type="text"
+                  name="pincode"
+                  value={localFormData.pincode || ""}
+                  onChange={handleChange}
+                  placeholder="Pin code"
+                  className="w-full mb-6 p-2 border rounded"
+                  required
+                />
 
               <button
                 type="submit"
@@ -440,7 +462,7 @@ const [showSignup, setShowSignup] = useState(false);
         <button className=" bg-[#332D21] text-white font-bold py-3 px-4 rounded-lg mt-6" onClick={()=>setShowLogin(true)}>Login to View Details</button>
 
         </div>
-      {showLogin && (
+        {showLogin && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <Login
             setShowLogin={setShowLogin}
@@ -461,7 +483,7 @@ const [showSignup, setShowSignup] = useState(false);
             setLoggedIn={setLoggedIn}
             hasVerified={hasVerified}
             setHasVerified={setHasVerified}
-            handleMobileNumber={()=>handleMobileNumber(true)}
+            handleMobileNumber={() => handleMobileNumber(true)}
           />
         </div>
       )}
@@ -469,7 +491,6 @@ const [showSignup, setShowSignup] = useState(false);
       {hasVerified && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <VerificationSuccess
-        
             setShowOTPVerification={setShowOTPVerification}
             setShowAddressForm={setShowAddressForm}
           ></VerificationSuccess>
@@ -478,7 +499,11 @@ const [showSignup, setShowSignup] = useState(false);
 
       {showAddressForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <AddressForm onClose={() => setShowAddressForm(false)} setHasVerified={setHasVerified} />
+          <AddressForm
+            onClose={() => setShowAddressForm(false)}
+            setHasVerified={setHasVerified}
+            handlePlaceOrder={handlePlaceOrder}
+          />
         </div>
       )}
         </div>

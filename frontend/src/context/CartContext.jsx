@@ -22,8 +22,10 @@ export const CartProvider = ({ children }) => {
       name: '',
       mobile: '',
       pincode: '',
-      landmark: '',
+      city: '',
       addressLine1: '',
+      addressLine2: '',
+      state: '',
       email: '',
       preOrderDate: '',
     };

@@ -7,12 +7,14 @@ const Admin = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [orderCancelled, setOrderCancelled] = useState(false);
 
   useEffect(() => {
-    if (activeTab !== "dashboard") {
+    if (activeTab !== "dashboard" || orderCancelled) {
       fetchOrders(activeTab);
+      setOrderCancelled(false); // Reset the flag after fetching
     }
-  }, [activeTab]);
+  }, [activeTab, orderCancelled]);
 
   const fetchOrders = async (status) => {
     setIsLoading(true);
@@ -23,6 +25,7 @@ const Admin = () => {
           deliveryStatus: status,
         }
       );
+      console.log(response);
       setOrders(
         Array.isArray(response.data.result) ? response.data.result : []
       );
@@ -60,15 +63,26 @@ const Admin = () => {
         }
       );
       alert("Order Cancelled");
+      setOrderCancelled(true); // Set the flag to trigger useEffect
     } catch (err) {
       console.log(err);
     }
   };
 
   const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    
     const date = new Date(dateString);
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return date.toLocaleDateString("en-US", options);
+    const options = { 
+      year: "numeric", 
+      month: "long", 
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true
+    };
+    
+    return date.toLocaleString("en-US", options);
   };
 
   // In your component:
@@ -89,6 +103,19 @@ const Admin = () => {
         <p>Address: {order.address}</p>
         <p>Total: ₹{order.total_price}</p>
         <p>Payment: {order.payment_status}</p>
+        {/* <p>
+        
+          {activeTab.toUpperCase()} DATE:{" "}
+          {order[`${activeTab}_date`]
+            ? formatDate(order[`${activeTab}_date`])
+            : "N/A"}
+        </p> */}
+
+        {order.received_date && <p>Received Date: {formatDate(order.received_date)}</p>}
+      {order.processing_date && <p>Processing Date: {formatDate(order.processing_date)}</p>}
+      {order.shipped_date && <p>Shipped Date: {formatDate(order.shipped_date)}</p>}
+      {order.delivered_date && <p>Delivered Date: {formatDate(order.delivered_date)}</p>}
+      {order.cancelled_date && <p>Cancelled Date: {formatDate(order.cancelled_date)}</p>}
 
         <div className="mt-4">
           <h4 className="font-semibold">Order Items:</h4>
@@ -105,27 +132,30 @@ const Admin = () => {
             <p>No items</p>
           )}
         </div>
-        <button
+        {activeTab!="cancelled"? <button
           className="w-full md:w-1/2 bg-red-500 text-white mt-2 rounded-lg px-4 py-2"
           onClick={() => {
             handleCancelOrder(order.order_id);
           }}
         >
           Cancel
-        </button>
+        </button>: <></>}
+        
       </div>
-      <div className="mt-4 lg:mt-0 lg:w-1/4">
-        <select
-          defaultValue={order.delivery_status}
+     <div className="mt-4 lg:mt-0 lg:w-1/4 bg-red">
+     
+       {activeTab!= 'cancelled' ? <> <select
+          value={activeTab} // Use activeTab as the value
           onChange={(e) => changeStatus(order.order_id, e.target.value)}
-          className="border rounded p-2 w-full lg:w-[120px]"
+          className={`border rounded p-2 w-full lg:w-[120px] status-${activeTab}`}
         >
           <option value="received">Received</option>
           <option value="processing">Processing</option>
           <option value="shipped">Shipped</option>
           <option value="delivered">Delivered</option>
-        </select>
+        </select></> : <></>}
       </div>
+      
     </div>
   );
 

@@ -54,6 +54,12 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
     return weightOption ? weightOption.mrp : 0;
   };
 
+  const gstValue = () => {
+    if (!selectedItem || !selectedWeight) return 0;
+    const weightOption = selectedItem.weights.find(w => w.weight === selectedWeight);
+    return weightOption ? weightOption.gst : 0;
+  }
+
   const handleAddToCart = () => {
     if (!selectedItem) return;
     const cartItem = {
@@ -61,13 +67,15 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
       quantity,
       weight: selectedWeight,
       price: getWeightPrice(),
-      totalprice: getWeightPrice() * quantity,
+      totalprice : getWeightPrice() * quantity,
       image: selectedItem.image,
-      category : selectedItem.category,
+      category: selectedItem.category,
       gst : selectedItem.gst,
-      mrp : getmrpPrice()*quantity
+      mrp : getmrpPrice(),
+      gstValue : gstValue()*quantity
     };
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+    console.log(cartItem)
     existingCart.push(cartItem);
     localStorage.setItem("cart", JSON.stringify(existingCart));
     const event = new Event("storage");
@@ -75,6 +83,13 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
     setToastMessage("Item added successfully!");
     setToastKey((prevKey) => prevKey + 1);
     handleCloseOverlay();
+    console.log("Item added:", {
+      name: selectedItem.name,
+      mrp: getmrpPrice(),
+      price: getWeightPrice(),
+      quantity: quantity,
+      // calculatedSavings: (getmrpPrice() - getWeightPrice()) * quantity
+    });
   };
 
   const handleBuyNow = () => {
@@ -83,11 +98,13 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
       name: selectedItem.name,
       quantity,
       weight: selectedWeight,
-      price: getWeightPrice() * quantity,
+      price: getWeightPrice(),
+      totalprice : getWeightPrice() * quantity,
       image: selectedItem.image,
       category: selectedItem.category,
       gst : selectedItem.gst,
-      mrp : getmrpPrice() * quantity
+      mrp : getmrpPrice(),
+      gstValue : gstValue()*quantity
     };
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
     existingCart.push(cartItem);
@@ -184,7 +201,7 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
                     onClick={() => setSelectedShell(!selectedShell)}
                   >
                     <p className="font-Nunito font-bold text-[12px] md:text-[14px] text-[#909090]">
-                      SHELL LIFE:
+                      SHELF LIFE:
                     </p>
                     {selectedShell ? (
                       <img src="down.svg" className="cursor-pointer" />
@@ -231,8 +248,8 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
               </div>
 
                   <div className="flex items-center gap-2 mt-4 justify-between mb-16 md:mb-4">
-                    <p className="text-[14px] font-bold text-[#606060] font-Nunito">
-                      ₹{getWeightPrice() }{" "}
+                    <p className="text-[17px] font-bold text-[#000000] font-Nunito">
+                      ₹{getWeightPrice() }{" "}<span className="line-through text-[#606060] text-[14px]">₹{getmrpPrice()}</span>
                       <p className="text-[14px] font-bold text-[#26A460] font-Nunito">
                         You save ₹{getmrpPrice()-getWeightPrice()}
                       </p>
