@@ -82,6 +82,10 @@ const kadalai1 =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/kadalaimitai1.png";
 const kadalai2 =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/kadalaimitai2.png";
+  const meals1 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/mealsmixture.png";
+const meals2 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/mealsmixture2.png";
 import star from "./star 3.svg";
 
 export const assets = {};
@@ -355,4 +359,18 @@ export const food_list = [
     life: "1 Month",
     gst: 5,
   },
+  {
+    _id: "17",
+    name: "Meals Mixture | Bombay Mixture",
+    description:
+      " Meals Mixture is a crunchy, flavorful blend of crispy besan flour strands, roasted peanuts,  cumin, and green peas. Perfectly spiced and savory, it offers a delightful mix of textures and flavors, making it an irresistible snack for any time of the day.",
+    image: [meals1, meals2],
+    weights: [
+      { weight: "100G", price: 50, mrp: 80, gst: 6 },
+      { weight: "250G", price: 125, mrp: 200, gst: 15 },
+    ],
+    category: "Savouries",
+    life: "1 Month",
+    gst: 12,
+  },
 ];
