@@ -174,7 +174,7 @@ const CartPage = () => {
 
       // Step 2: Initiate the Razorpay payment
       const options = {
-        key: "rzp_test_ZyVKG8K6k1Gol1",
+        key: "process.env.REACT_APP_RAZOR_LIVE_KEY",
         amount: order.amount,
         currency: "INR",
         name: "Annapoorna Mithai",
