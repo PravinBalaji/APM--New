@@ -17,6 +17,8 @@ import VerificationSuccess from "../../components/VerificationSuccess";
 import SignupForm from "../../components/Signup";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import Swal from "sweetalert2";
+import Slider2 from "../../components/Slider2";
 const CartPage = () => {
   const {
     cartItems,
@@ -33,9 +35,7 @@ const CartPage = () => {
   useEffect(() => {
     // This effect will run whenever cartUpdateTrigger changes
     // You can add any additional logic here if needed
-    
   }, [cartItems]);
-
 
   const [isLoading, setIsLoading] = useState(false);
   const [buttonPressed, setButtonPressed] = useState(false);
@@ -47,6 +47,7 @@ const CartPage = () => {
   const [isPreOrder, setIsPreOrder] = useState(false);
   const [preOrderDate, setPreOrderDate] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
+  const [alert, setAlert] = useState(false);
 
   const [showSignup, setShowSignup] = useState(false);
   const handleSignup = () => {
@@ -105,14 +106,23 @@ const CartPage = () => {
     }
   }, []);
 
+  // const handleAddressForm = () => {
+  //   setShowAddressForm(true);
+  // }
+
   const handleAddressForm = () => {
-    setShowAddressForm(true);
-  }
+    infoAlert().then((result) => {
+      if (result.isConfirmed) {
+        setShowAddressForm(true);
+      }
+    });
+  };
 
   const handlePlaceOrder = async () => {
     try {
       setButtonPressed(true);
       // setShowAddressForm(true);
+      console.log(selectedDate)
       console.log(document.cookie); // This might not show HttpOnly cookies
       console.log(cartItems);
       // Step 1: Create an order in your backend to get an order ID
@@ -121,14 +131,14 @@ const CartPage = () => {
         formData.addressLine1 +
         ", " +
         formData.addressLine2 +
-        " " +
+        " \n" +
         formData.city +
         ", " +
-        formData.state +
-        ", " +
-        formData.pincode;
+        formData.pincode +
+        "\n" +
+        formData.state;
       // Make sure authToken exists
-      console.log(address)
+      console.log(address);
       if (!authToken) {
         throw new Error("No authentication token found. Please log in.");
       }
@@ -281,6 +291,7 @@ const CartPage = () => {
   useEffect(() => {
     updateCartItemCount();
     window.addEventListener("storage", updateCartItemCount);
+    
 
     return () => {
       window.removeEventListener("storage", updateCartItemCount);
@@ -308,6 +319,7 @@ const CartPage = () => {
 
   const handlePreOrderChange = (e) => {
     setIsPreOrder(e.target.checked);
+    
   };
 
   const handlePreOrderDateChange = (e) => {
@@ -341,14 +353,18 @@ const CartPage = () => {
   const { sweetsGST, savouriesGST, totalGST } = calculateGST();
 
   const calculateItemSavings = (item) => {
-    return Math.round(((item.mrp - item.price) * item.quantity * 100)) / 100;
+    return Math.round((item.mrp - item.price) * item.quantity * 100) / 100;
   };
-  
+
   const calculateTotalSavings = () => {
-    return Math.round(cartItems.reduce(
-      (total, item) => total + calculateItemSavings(item) * 100,
-      0
-    )) / 100;
+    return (
+      Math.round(
+        cartItems.reduce(
+          (total, item) => total + calculateItemSavings(item) * 100,
+          0
+        )
+      ) / 100
+    );
   };
   const calculateFinalAmount = () => {
     const subtotal = calculateSubtotal();
@@ -366,13 +382,38 @@ const CartPage = () => {
   const { total, gst, delivery, subtotal } = calculateFinalAmount();
 
   const meetsMinimumOrder = () => {
-    return total >= 500;
+    return total >= 599;
   };
+
+  const infoAlert = () => {
+    return Swal.fire({
+      title: "<strong>Important Order Information</strong>",
+      icon: "info",
+      html: `
+        <p>Please note the following order processing details:</p>
+        <ul>
+          <li>Orders placed on or before October 26th will be delivered before Diwali (before October 31st).</li>
+          <li>Orders placed after October 26th will begin to be processed from November 4th..</li>
+        </ul>
+        
+      `,
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText: "Proceed",
+      cancelButtonText: "Go Back",
+    });
+  };
+  const currentYear = new Date().getFullYear();
+  const excludedDates = [
+    new Date(currentYear, 9, 30), // Month is 0-indexed, so 9 is October
+    new Date(currentYear, 9, 31),
+  ];
 
   return (
     <div>
       <Navbar cartItemCount={cartItemCount} />
-      <Slider />
+      <Slider2 />
       <CartHeader></CartHeader>
       {isLoading && <Loader />}
       {showOrderPlaced && <OrderPlacedModal />}
@@ -505,10 +546,11 @@ const CartPage = () => {
                 <div className="flex gap-1 mt-3">
                   <img src="saving.svg"></img>
                   <p className="text-[#26A460] text-[14px] font-bold font-Nunito">
-                    You saved ₹{calculateTotalSavings().toFixed(2)} in this order!
+                    You saved ₹{calculateTotalSavings().toFixed(2)} in this
+                    order!
                   </p>
                 </div>
-                <div className="mt-4">
+                {/* <div className="mt-4">
                   <label className="flex items-center">
                     <input
                       type="checkbox"
@@ -526,32 +568,22 @@ const CartPage = () => {
                     <label className="text-[14px] font-semibold block mb-1">
                       Select Pre-order Date:
                     </label>
-                    {/* <input
-                      type="date"
-                      value={preOrderDate}
-                      onChange={handlePreOrderDateChange}
-                      min={minDateString}
-                      className="w-full p-2 border rounded appearance-none"
-                      style={{
-                        WebkitAppearance: "none",
-                        MozAppearance: "textfield",
-                      }}
-                      required
-                    /> */}
+                
                     <DatePicker
                       selected={selectedDate}
                       onChange={(date) => setSelectedDate(date)}
+                      excludeDates={excludedDates}
                       dateFormat="dd/MM/yyyy"
                       minDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)}
                       className="w-full rounded-lg bg-[#ffff] border p-4 border-[#000000] h-10"
-                    ></DatePicker>
-                  </div>
-                )}
+                    />
+                  </div>  
+                )} */}
               </div>
               <div className="w-full lg:w-10/12">
                 {!meetsMinimumOrder() && (
                   <p className="text-red-500 text-sm mb-2">
-                    Minimum order amount is ₹500. Please add more items to your
+                    Minimum order amount is ₹599. Please add more items to your
                     cart.
                   </p>
                 )}

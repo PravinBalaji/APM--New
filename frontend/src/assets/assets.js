@@ -82,6 +82,10 @@ const kadalai1 =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/kadalaimitai1.png";
 const kadalai2 =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/kadalaimitai2.png";
+  const meals1 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/mealsmixture.png";
+const meals2 =
+  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/mealsmixture2.png";
 import star from "./star 3.svg";
 
 export const assets = {};
@@ -146,7 +150,7 @@ export const food_list = [
       "Crispy Cashew nuts soaked then grinded into fine dough and elegantly served with Pure silver leaf",
     image: [kaju],
     weights: [
-      { weight: "250G", price: 310, mrp: 326, gst: 15.5 },
+      // { weight: "250G", price: 310, mrp: 326, gst: 15.5 },
       { weight: "500G", price: 620, mrp: 651, gst: 31 },
       { weight: "1 KG", price: 1240, mrp: 1302, gst: 62 },
     ],
@@ -175,7 +179,7 @@ export const food_list = [
       " Savor the delicious blend of mango, kiwi, strawberry, and pineapple, paired with premium kaju (cashews). Each bite is a delightful fusion of natural sweetness and rich, creamy texture. This healthy treat is perfect for any occasion, offering a royal taste experience that celebrates nature’s finest flavors!",
     image: [royal2,royal1,strawberry,kiwi,kajupineapple,blueberry,kajumango],
     weights: [
-      { weight: "250G", price: 357, mrp: 375, gst: 17.85 },
+     // { weight: "250G", price: 357, mrp: 375, gst: 17.85 },
       { weight: "500G", price: 715, mrp: 750, gst: 35.75 },
       { weight: "1 KG", price: 1429, mrp: 1500, gst: 71.45 },
     ],
@@ -204,7 +208,7 @@ export const food_list = [
       "Assortment of Sweets made majorly from Cashew Nut and its paste variegated with add-on such as Rose Petals, Butterscotch, Dry Fruits, Real Fruits, Pistachio, Chocolate and Badam. ",
     image: [assortedkaju1, assortedkaju2],
     weights: [
-      { weight: "250G", price: 357, mrp: 375, gst: 17.85 },
+     // { weight: "250G", price: 357, mrp: 375, gst: 17.85 },
       { weight: "500G", price: 715, mrp: 750, gst: 35.75 },
       { weight: "1 KG", price: 1429, mrp: 1500, gst: 71.45 },
     ],
@@ -219,7 +223,7 @@ export const food_list = [
       "Assorted Ghee Sweets Box – A delightful selection of traditional Indian sweets, made with a mix of besan (gram flour), wheat, maida (refined flour), and daal, all cooked in pure ghee.",
     image: [assortedghee,assortedghee2],
     weights: [
-      { weight: "250G", price: 174, mrp: 183, gst: 8.7 },
+     // { weight: "250G", price: 174, mrp: 183, gst: 8.7 },
       { weight: "500G", price: 348, mrp: 365, gst: 17.4 },
       { weight: "1 KG", price: 695, mrp: 730, gst: 34.75 },
     ],
@@ -227,7 +231,7 @@ export const food_list = [
     life: "10 Days",
     gst: 5,
   },
-  {
+ /* {
     _id: "7",
     name: "Kambu Pori | Pearl Millet Puff |  Bajra Mix",
     description:
@@ -240,7 +244,7 @@ export const food_list = [
     category: "Savouries",
     life: "1 Month",
     gst: 12,
-  },
+  },*/ 
   {
     _id: "8",
     name: "Foxtail Mixture | Seemai Thinai Mixture | Millet Mixture",
@@ -287,7 +291,7 @@ export const food_list = [
     description:"A luxurious assortment of sweets made from anjeer (figs), dates, and a rich blend of almonds, pistachios, and cashews. A perfect blend of taste and health, these treats offer a delicious way to enjoy the goodness of nature's finest dry fruits.",
     image: [dryfruits, anjeer, datesroll, navaratna],
     weights: [
-      { weight: "250G", price: 357, mrp: 375, gst: 17.85 },
+     // { weight: "250G", price: 357, mrp: 375, gst: 17.85 },
       { weight: "500G", price: 715, mrp: 750, gst: 35.75 },
       { weight: "1 KG", price: 1429, mrp: 1500, gst: 71.45 },
     ],
@@ -355,4 +359,18 @@ export const food_list = [
     life: "1 Month",
     gst: 5,
   },
+  {
+    _id: "17",
+    name: "Meals Mixture | Bombay Mixture",
+    description:
+      " Meals Mixture is a crunchy, flavorful blend of crispy besan flour strands, roasted peanuts,  cumin, and green peas. Perfectly spiced and savory, it offers a delightful mix of textures and flavors, making it an irresistible snack for any time of the day.",
+    image: [meals1, meals2],
+    weights: [
+      { weight: "100G", price: 50, mrp: 80, gst: 6 },
+      { weight: "250G", price: 125, mrp: 200, gst: 15 },
+    ],
+    category: "Savouries",
+    life: "1 Month",
+    gst: 12,
+  },
 ];

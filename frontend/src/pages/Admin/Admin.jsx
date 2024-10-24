@@ -2,17 +2,23 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../../components/Loader/Loader";
 
+
 const Admin = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [orderCancelled, setOrderCancelled] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showDailyReportTable, setShowDailyReportTable] = useState(false);
 
   useEffect(() => {
-    if (activeTab !== "dashboard" || orderCancelled) {
+    if (activeTab !== "dashboard" && activeTab !== "dailyreports" || orderCancelled) {
       fetchOrders(activeTab);
-      setOrderCancelled(false); // Reset the flag after fetching
+      setOrderCancelled(false);
+    }
+    if (activeTab !== "dailyreports") {
+      setShowDailyReportTable(false);
     }
   }, [activeTab, orderCancelled]);
 
@@ -25,13 +31,61 @@ const Admin = () => {
           deliveryStatus: status,
         }
       );
-      console.log(response);
-      setOrders(
-        Array.isArray(response.data.result) ? response.data.result : []
-      );
+      setOrders(Array.isArray(response.data.result) ? response.data.result : []);
     } catch (error) {
       console.error("Error fetching orders:", error);
       setOrders([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchDailyReports = async () => {
+    setIsLoading(true);
+    console.log(selectedDate)
+    try {
+      const response = await axios.post(
+        "https://www.annapoornamithai.com/feature/view-report",
+        {
+          inputdate: selectedDate
+        }
+      );
+      setOrders(Array.isArray(response.data.result) ? response.data.result : []);
+      setShowDailyReportTable(true);
+    } catch (error) {
+      console.error("Error fetching daily reports:", error);
+      setOrders([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  const handleDownloadReport = async () => {
+    setIsLoading(true);
+    console.log("Selected Date :" + selectedDate)
+    try {
+      const response = await axios.post("https://www.annapoornamithai.com/feature/download-report", {
+        inputdate:selectedDate,
+        
+      });
+  
+      // if (!response.ok) {
+      //   throw new Error("Network response was not ok");
+      // }
+  
+      const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "report.xlsx";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      alert("Report downloaded successfully.");
+    } catch (error) {
+      console.error("Error downloading report:", error);
+      alert(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -69,21 +123,25 @@ const Admin = () => {
     }
   };
 
+  
+
   const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    
+    if (!dateString) return "N/A";
+
     const date = new Date(dateString);
-    const options = { 
-      year: "numeric", 
-      month: "long", 
+    const options = {
+      year: "numeric",
+      month: "long",
       day: "numeric",
       hour: "numeric",
       minute: "numeric",
-      hour12: true
+      hour12: true,
     };
-    
+
     return date.toLocaleString("en-US", options);
   };
+
+  const Table = () => {};
 
   // In your component:
 
@@ -111,11 +169,21 @@ const Admin = () => {
             : "N/A"}
         </p> */}
 
-        {order.received_date && <p>Received Date: {formatDate(order.received_date)}</p>}
-      {order.processing_date && <p>Processing Date: {formatDate(order.processing_date)}</p>}
-      {order.shipped_date && <p>Shipped Date: {formatDate(order.shipped_date)}</p>}
-      {order.delivered_date && <p>Delivered Date: {formatDate(order.delivered_date)}</p>}
-      {order.cancelled_date && <p>Cancelled Date: {formatDate(order.cancelled_date)}</p>}
+        {order.received_date && (
+          <p>Received Date: {formatDate(order.received_date)}</p>
+        )}
+        {order.processing_date && (
+          <p>Processing Date: {formatDate(order.processing_date)}</p>
+        )}
+        {order.shipped_date && (
+          <p>Shipped Date: {formatDate(order.shipped_date)}</p>
+        )}
+        {order.delivered_date && (
+          <p>Delivered Date: {formatDate(order.delivered_date)}</p>
+        )}
+        {order.cancelled_date && (
+          <p>Cancelled Date: {formatDate(order.cancelled_date)}</p>
+        )}
 
         <div className="mt-4">
           <h4 className="font-semibold">Order Items:</h4>
@@ -132,30 +200,108 @@ const Admin = () => {
             <p>No items</p>
           )}
         </div>
-        {activeTab!="cancelled"? <button
-          className="w-full md:w-1/2 bg-red-500 text-white mt-2 rounded-lg px-4 py-2"
-          onClick={() => {
-            handleCancelOrder(order.order_id);
-          }}
-        >
-          Cancel
-        </button>: <></>}
-        
+        {activeTab != "cancelled" ? (
+          <button
+            className="w-full md:w-1/2 bg-red-500 text-white mt-2 rounded-lg px-4 py-2"
+            onClick={() => {
+              handleCancelOrder(order.order_id);
+            }}
+          >
+            Cancel
+          </button>
+        ) : (
+          <></>
+        )}
       </div>
-     <div className="mt-4 lg:mt-0 lg:w-1/4 bg-red">
-     
-       {activeTab!= 'cancelled' ? <> <select
-          value={activeTab} // Use activeTab as the value
-          onChange={(e) => changeStatus(order.order_id, e.target.value)}
-          className={`border rounded p-2 w-full lg:w-[120px] status-${activeTab}`}
-        >
-          <option value="received">Received</option>
-          <option value="processing">Processing</option>
-          <option value="shipped">Shipped</option>
-          <option value="delivered">Delivered</option>
-        </select></> : <></>}
+      <div className="mt-4 lg:mt-0 lg:w-1/4 bg-red">
+        {activeTab != "cancelled" ? (
+          <>
+            {" "}
+            <select
+              value={activeTab} // Use activeTab as the value
+              onChange={(e) => changeStatus(order.order_id, e.target.value)}
+              className={`border rounded p-2 w-full lg:w-[120px] status-${activeTab}`}
+            >
+              <option value="received">Received</option>
+              <option value="processing">Processing</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+            </select>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
-      
+    </div>
+  );
+
+  const DailyReportsDatePicker = () => (
+    <div className="mb-4">
+      {/* <DatePicker
+        selected={selectedDate}
+        onChange={(date) => setSelectedDate(date)}
+        className="p-2 border rounded"
+      /> */}
+      <input type="date" className="date-picker p-2 rounded-md shadow-lg" value={selectedDate} onChange={(e)=>setSelectedDate(e.target.value)}></input>
+      <button
+        onClick={fetchDailyReports}
+        className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Submit
+      </button>
+    </div>
+  );
+
+  const DailyReportsTable = ({ orders }) => (
+    <div className="overflow-x-auto">
+      <table className="min-w-full bg-white">
+        <thead>
+          <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <th className="py-3 px-6 text-left">Order ID</th>
+            <th className="py-3 px-6 text-left">Name</th>
+            <th className="py-3 px-6 text-left">Address</th>
+            <th className="py-3 px-6 text-left">Received Date</th>
+            <th className="py-3 px-6 text-left">Processing Date</th>
+            <th className="py-3 px-6 text-left">Shipped Date</th>
+            <th className="py-3 px-6 text-left">Delivered Date</th>
+            <th className="py-3 px-6 text-left">Order Status</th>
+          </tr>
+        </thead>
+        <tbody className="text-gray-600 text-sm font-light">
+          {orders.map((order) => (
+            <tr
+              key={order.order_id}
+              className="border-b border-gray-200 hover:bg-gray-100"
+            >
+              <td className="py-3 px-6 text-left whitespace-nowrap">
+                {order.order_id}
+              </td>
+              <td className="py-3 px-6 text-left">{order.name}</td>
+              <td className="py-3 px-6 text-left">{order.address}</td>
+              <td className="py-3 px-6 text-left">
+                {formatDate(order.received_date)}
+              </td>
+              <td className="py-3 px-6 text-left">
+                {formatDate(order.processing_date)}
+              </td>
+              <td className="py-3 px-6 text-left">
+                {formatDate(order.shipped_date)}
+              </td>
+              <td className="py-3 px-6 text-left">
+                {formatDate(order.delivered_date)}
+              </td>
+              <td className="py-3 px-6 text-left">{order.order_status}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button
+      onClick={handleDownloadReport}
+      className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+      disabled={isLoading}
+    >
+      {isLoading ? 'Downloading...' : 'Download Report'}
+    </button>
     </div>
   );
 
@@ -200,6 +346,7 @@ const Admin = () => {
               "shipped",
               "delivered",
               "cancelled",
+              "dailyreports",
             ].map((tab) => (
               <li key={tab} className="mb-2">
                 <button
@@ -224,16 +371,24 @@ const Admin = () => {
       {/* Main content */}
       <div className="flex-1 p-4 lg:p-8">
         <h1 className="text-2xl font-bold mb-4 mt-6 lg:mt-0">
-          {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Orders
+          {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}{" "}
+          {activeTab === "dailyreports" ? "Report" : "Orders"}
         </h1>
         {isLoading ? (
           <div className="flex justify-center items-center h-full">
             <Loader />
           </div>
         ) : activeTab === "dashboard" ? (
-          <p>
-            Welcome to the admin dashboard. Select a category to view orders.
-          </p>
+          <p>Welcome to the admin dashboard. Select a category to view orders.</p>
+        ) : activeTab === "dailyreports" ? (
+          <>
+            <DailyReportsDatePicker />
+            {showDailyReportTable && orders.length > 0 ? (
+              <DailyReportsTable orders={orders} />
+            ) : showDailyReportTable ? (
+              <p>No data found for the selected date.</p>
+            ) : null}
+          </>
         ) : orders.length > 0 ? (
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
             {orders.map((order) => (
@@ -241,10 +396,9 @@ const Admin = () => {
             ))}
           </div>
         ) : (
-          <p>No orders found for this status.</p>
+          <p>No data found for this category.</p>
         )}
       </div>
-
       {/* Overlay for mobile when sidebar is open */}
       {isSidebarOpen && (
         <div
