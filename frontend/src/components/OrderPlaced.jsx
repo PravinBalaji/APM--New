@@ -28,8 +28,8 @@ const OrderPlacedModal = () => {
 
         <h2 className="text-[#589C39] text-2xl font-bold mb-2">Order Placed</h2>
         <p className="text-gray-600 text-center mb-6">
-          Thank you! Your sweets are prepared and arrive soon.
-        </p>
+        Thank you ! Your order is currently being prepared and will be delivered to you soon.
+	  </p>
 
         <button
           onClick={() => {

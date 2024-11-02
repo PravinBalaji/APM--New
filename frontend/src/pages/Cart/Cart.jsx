@@ -20,6 +20,7 @@ import DatePicker from "react-datepicker";
 import Swal from "sweetalert2";
 import Slider2 from "../../components/Slider2";
 const CartPage = () => {
+const [deliveryAmount, setDelivery] = useState(100);
   const {
     cartItems,
     removeFromCart,
@@ -32,9 +33,27 @@ const CartPage = () => {
     setLoggedIn,
   } = useContext(CartContext);
 
-  useEffect(() => {
-    // This effect will run whenever cartUpdateTrigger changes
-    // You can add any additional logic here if needed
+useEffect(() => {
+    console.log(cartItems);
+    let gramWeight = 0;
+    let kiloWeight = 0;
+    cartItems.forEach((item) => {
+      if (item.weight.includes("KG")) {
+        kiloWeight += item.quantity * 1000;
+      } else {
+        const weight = item.weight;
+        let numberOnly = weight.replace(/[^\d.]/g, "");
+        let gmQuantity = parseFloat(numberOnly);
+        gramWeight += item.quantity * gmQuantity;
+      }
+    });
+    const totalWeight = gramWeight + kiloWeight;
+    console.log("gram quantity = " + gramWeight);
+    console.log("Kilo quantity = " + kiloWeight);
+    console.log("total quantity = " + totalWeight);
+    const weightPercent = Math.ceil(totalWeight / 1000);
+    console.log("total weight percent = " + weightPercent);
+    setDelivery(weightPercent * 100);
   }, [cartItems]);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -370,11 +389,10 @@ const CartPage = () => {
     const subtotal = calculateSubtotal();
     const gst = totalGST;
     // const gst = 0;
-    const delivery = 100;
     return {
-      total: subtotal + gst + delivery,
+      total: subtotal + gst + deliveryAmount,
       gst,
-      delivery,
+      delivery:deliveryAmount,
       subtotal,
     };
   };
