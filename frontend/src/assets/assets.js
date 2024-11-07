@@ -47,13 +47,13 @@ const crunchy =
 const choco2 =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/bounty2.png";
 const assortedkaju1 =
-  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/kajusweets1.png";
+  "https://raw.githubusercontent.com/Warlord09/annapoorna-images/refs/heads/main/mixkaju1.png";
 const assortedkaju2 =
-  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/kajusweets2.png";
+  "https://raw.githubusercontent.com/Warlord09/annapoorna-images/refs/heads/main/mixkaju2.png";
 const assortedghee =
-  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/gheesweets1.png";
+  "https://raw.githubusercontent.com/Warlord09/annapoorna-images/refs/heads/main/mixghee1.png";
 const assortedghee2 =
-  "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/gheesweets2.png";
+  "https://raw.githubusercontent.com/Warlord09/annapoorna-images/refs/heads/main/mixghee2.png";
 const royal1 =
   "https://raw.githubusercontent.com/sanjvj/Annapoorna_images/refs/heads/main/royal1.png";
 const royal2 =

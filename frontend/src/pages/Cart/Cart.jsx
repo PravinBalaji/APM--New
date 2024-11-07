@@ -125,17 +125,17 @@ useEffect(() => {
     }
   }, []);
 
-  // const handleAddressForm = () => {
-  //   setShowAddressForm(true);
-  // }
+   const handleAddressForm = () => {
+     setShowAddressForm(true);
+   }
 
-  const handleAddressForm = () => {
+  /* const handleAddressForm = () => {
     infoAlert().then((result) => {
       if (result.isConfirmed) {
         setShowAddressForm(true);
       }
     });
-  };
+  }; */
 
   const handlePlaceOrder = async () => {
     try {
@@ -403,25 +403,6 @@ useEffect(() => {
     return total >= 599;
   };
 
-  const infoAlert = () => {
-    return Swal.fire({
-      title: "<strong>Important Order Information</strong>",
-      icon: "info",
-      html: `
-        <p>Please note the following order processing details:</p>
-        <ul>
-          <li>Orders placed on or before October 26th will be delivered before Diwali (before October 31st).</li>
-          <li>Orders placed after October 26th will begin to be processed from November 4th..</li>
-        </ul>
-        
-      `,
-      showCloseButton: true,
-      showCancelButton: true,
-      focusConfirm: false,
-      confirmButtonText: "Proceed",
-      cancelButtonText: "Go Back",
-    });
-  };
   const currentYear = new Date().getFullYear();
   const excludedDates = [
     new Date(currentYear, 9, 30), // Month is 0-indexed, so 9 is October
@@ -431,7 +412,7 @@ useEffect(() => {
   return (
     <div>
       <Navbar cartItemCount={cartItemCount} />
-      <Slider2 />
+      <Slider />
       <CartHeader></CartHeader>
       {isLoading && <Loader />}
       {showOrderPlaced && <OrderPlacedModal />}
@@ -568,7 +549,7 @@ useEffect(() => {
                     order!
                   </p>
                 </div>
-                {/* <div className="mt-4">
+                 <div className="mt-4">
                   <label className="flex items-center">
                     <input
                       type="checkbox"
@@ -596,7 +577,7 @@ useEffect(() => {
                       className="w-full rounded-lg bg-[#ffff] border p-4 border-[#000000] h-10"
                     />
                   </div>  
-                )} */}
+                )}
               </div>
               <div className="w-full lg:w-10/12">
                 {!meetsMinimumOrder() && (
