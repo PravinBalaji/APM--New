@@ -21,9 +21,11 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
     setFilterSelected(!filterSelected);
   };
 
-  const filteredFoodList = food_list.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (item.category && item.category.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredFoodList = food_list.filter(
+    (item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.category &&
+        item.category.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const handleItemClick = (item) => {
@@ -44,21 +46,27 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
 
   const getWeightPrice = () => {
     if (!selectedItem || !selectedWeight) return 0;
-    const weightOption = selectedItem.weights.find(w => w.weight === selectedWeight);
+    const weightOption = selectedItem.weights.find(
+      (w) => w.weight === selectedWeight
+    );
     return weightOption ? weightOption.price : 0;
   };
 
   const getmrpPrice = () => {
     if (!selectedItem || !selectedWeight) return 0;
-    const weightOption = selectedItem.weights.find(w => w.weight === selectedWeight);
+    const weightOption = selectedItem.weights.find(
+      (w) => w.weight === selectedWeight
+    );
     return weightOption ? weightOption.mrp : 0;
   };
 
   const gstValue = () => {
     if (!selectedItem || !selectedWeight) return 0;
-    const weightOption = selectedItem.weights.find(w => w.weight === selectedWeight);
+    const weightOption = selectedItem.weights.find(
+      (w) => w.weight === selectedWeight
+    );
     return weightOption ? weightOption.gst : 0;
-  }
+  };
 
   const handleAddToCart = () => {
     if (!selectedItem) return;
@@ -67,15 +75,15 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
       quantity,
       weight: selectedWeight,
       price: getWeightPrice(),
-      totalprice : getWeightPrice() * quantity,
+      totalprice: getWeightPrice() * quantity,
       image: selectedItem.image,
       category: selectedItem.category,
-      gst : selectedItem.gst,
-      mrp : getmrpPrice(),
-      gstValue : gstValue()*quantity
+      gst: selectedItem.gst,
+      mrp: getmrpPrice(),
+      gstValue: gstValue() * quantity,
     };
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-    console.log(cartItem)
+    console.log(cartItem);
     existingCart.push(cartItem);
     localStorage.setItem("cart", JSON.stringify(existingCart));
     const event = new Event("storage");
@@ -99,12 +107,12 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
       quantity,
       weight: selectedWeight,
       price: getWeightPrice(),
-      totalprice : getWeightPrice() * quantity,
+      totalprice: getWeightPrice() * quantity,
       image: selectedItem.image,
       category: selectedItem.category,
-      gst : selectedItem.gst,
-      mrp : getmrpPrice(),
-      gstValue : gstValue()*quantity
+      gst: selectedItem.gst,
+      mrp: getmrpPrice(),
+      gstValue: gstValue() * quantity,
     };
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
     existingCart.push(cartItem);
@@ -138,25 +146,27 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
                 : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
             } mt-14 mx-auto md:max-w-screen-xl sm:px-6 lg:px-8 mb-10`} // Added px-4 for mobile spacing
           >
-            {filteredFoodList.map((item, index) => (
-              <FoodItem
-                key={index}
-                item={item}
-                onClick={() => handleItemClick(item)}
-              />
-            ))}
+            {filteredFoodList.map((item, index) =>
+              item.availability === "Available" ? (
+                <FoodItem
+                  key={index}
+                  item={item}
+                  onClick={() => handleItemClick(item)}
+                />
+              ) : <></>
+            )}
           </div>
         ) : (
           <div className="col-span-3">
-          <div className="flex flex-col items-center justify-center mt-20">
-            <h2 className="text-2xl font-bold text-gray-700 mb-4">
-              No Products Found
-            </h2>
-            <p className="text-gray-500 mb-10">
-              Try adjusting your search or filter to find what you're looking
-              for!
-            </p>
-          </div>
+            <div className="flex flex-col items-center justify-center mt-20">
+              <h2 className="text-2xl font-bold text-gray-700 mb-4">
+                No Products Found
+              </h2>
+              <p className="text-gray-500 mb-10">
+                Try adjusting your search or filter to find what you're looking
+                for!
+              </p>
+            </div>
           </div>
         )}
         {filterSelected ? (
@@ -194,7 +204,6 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
                   </h2>
                   <p className="text-[#909090] text-[12px] font-Nunito font-[400px] mb-2">
                     {selectedItem.description}
-                    
                   </p>
                   <div
                     className="flex gap-1 cursor-pointer"
@@ -236,22 +245,29 @@ const FoodDisplay = ({ category, setCategory, searchTerm, setSearchTerm }) => {
                     ))}
                   </div> */}
                   <div className="flex gap-2 mt-4">
-                {selectedItem.weights.map((weightOption) => (
-                  <button
-                    key={weightOption.weight}
-                    className={`px-[12px] py-[4px] md:px-[14px] md:py-[6px] font-Nunito font-extrabold text-[#606060] text-[12px] rounded ${selectedWeight === weightOption.weight ?  "border-2 border-[#F7AE1C] bg-[#FFFCF4]": 'border-2 border-[#E6E6E6]'}`}
-                    onClick={() => setSelectedWeight(weightOption.weight)}
-                  >
-                    {weightOption.weight}
-                  </button>
-                ))}
-              </div>
+                    {selectedItem.weights.map((weightOption) => (
+                      <button
+                        key={weightOption.weight}
+                        className={`px-[12px] py-[4px] md:px-[14px] md:py-[6px] font-Nunito font-extrabold text-[#606060] text-[12px] rounded ${
+                          selectedWeight === weightOption.weight
+                            ? "border-2 border-[#F7AE1C] bg-[#FFFCF4]"
+                            : "border-2 border-[#E6E6E6]"
+                        }`}
+                        onClick={() => setSelectedWeight(weightOption.weight)}
+                      >
+                        {weightOption.weight}
+                      </button>
+                    ))}
+                  </div>
 
                   <div className="flex items-center gap-2 mt-4 justify-between mb-16 md:mb-4">
                     <p className="text-[17px] font-bold text-[#000000] font-Nunito">
-                      ₹{getWeightPrice() }{" "}<span className="line-through text-[#606060] text-[14px]">₹{getmrpPrice()}</span>
+                      ₹{getWeightPrice()}{" "}
+                      <span className="line-through text-[#606060] text-[14px]">
+                        ₹{getmrpPrice()}
+                      </span>
                       <p className="text-[14px] font-bold text-[#26A460] font-Nunito">
-                        You save ₹{getmrpPrice()-getWeightPrice()}
+                        You save ₹{getmrpPrice() - getWeightPrice()}
                       </p>
                     </p>
                     <div className="bg-[#F8F8F8] border border-[#E6E6E6] px-2 rounded-lg">
