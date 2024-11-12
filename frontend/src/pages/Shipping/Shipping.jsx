@@ -34,7 +34,7 @@ const Shipping = () => {
 
         <h2 className="text-md font-semibold mt-6 mb-4">Shipping Areas:</h2>
         <p className="text-sm">
-          We currently offer shipping Karnataka, Kerala and Tamilnadu. 
+          We currently offer shipping Pondicherry, Karnataka, Kerala and Tamilnadu. 
           If your location is not within our shipping areas, we apologize for the inconvenience and are unable to fulfill your order at this time.
         </p>
 

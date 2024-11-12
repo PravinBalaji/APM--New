@@ -23,10 +23,10 @@ const Refund = () => {
 
   const PolicySection = ({ title, content }) => (
     <div className="mb-6">
-      <h2 className="font-bold font-Nunito text-[16px] text-[#606060] mb-2">
+      <h2 className="font-bold  text-[16px] text-[#606060] mb-2">
         {title}
       </h2>
-      <div className="font-[400] text-[14px] font-Nunito text-[#606060]">
+      <div className="font-[400] text-[14px]  text-[#606060]">
         {content}
       </div>
     </div>
@@ -37,7 +37,7 @@ const Refund = () => {
       <Navbar cartItemCount={cartItemCount} />
       <Slider />
       <div className="m-8 lg:mx-auto lg:max-w-screen-xl items-center">
-        <h1 className="mb-6 font-Nunito text-[24px] font-bold text-[#606060] text-center">
+        <h1 className="mb-6  text-[24px] font-bold text-[#606060] text-center">
           Refund Policy
         </h1>
 
@@ -174,17 +174,17 @@ const Refund = () => {
         />
 
         <div className="mt-6">
-          <h3 className="font-bold font-Nunito text-[16px] text-[#606060] mb-2">
+          <h3 className="font-bold  text-[16px] text-[#606060] mb-2">
             Return Address:
           </h3>
-          <p className="font-[400] text-[14px] font-Nunito text-[#606060]">
+          <p className="font-[400] text-[14px]  text-[#606060]">
             AnnapoornaMithai Sweets & Bakery
             <br />
             12/2, Ram Nagar, Bypass Road, Near Aparna Towers,
             <br />
             Madurai, TamilNadu 625010
           </p>
-          <p className="mt-2 font-[400] text-[14px] font-Nunito text-[#606060]">
+          <p className="mt-2 font-[400] text-[14px]  text-[#606060]">
             Depending on your location, the time it may take for your exchanged
             product to reach you may vary.
           </p>

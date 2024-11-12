@@ -20,7 +20,7 @@ import DatePicker from "react-datepicker";
 import Swal from "sweetalert2";
 import Slider2 from "../../components/Slider2";
 const CartPage = () => {
-const [deliveryAmount, setDelivery] = useState(100);
+  const [deliveryAmount, setDelivery] = useState(100);
   const {
     cartItems,
     removeFromCart,
@@ -33,7 +33,7 @@ const [deliveryAmount, setDelivery] = useState(100);
     setLoggedIn,
   } = useContext(CartContext);
 
-useEffect(() => {
+  useEffect(() => {
     console.log(cartItems);
     let gramWeight = 0;
     let kiloWeight = 0;
@@ -125,9 +125,15 @@ useEffect(() => {
     }
   }, []);
 
-   const handleAddressForm = () => {
-     setShowAddressForm(true);
-   }
+  const handleAddressForm = () => {
+    setShowAddressForm(true);
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("en-US", options);
+  };
 
   /* const handleAddressForm = () => {
     infoAlert().then((result) => {
@@ -141,7 +147,7 @@ useEffect(() => {
     try {
       setButtonPressed(true);
       // setShowAddressForm(true);
-      console.log(selectedDate)
+      console.log(selectedDate);
       console.log(document.cookie); // This might not show HttpOnly cookies
       console.log(cartItems);
       // Step 1: Create an order in your backend to get an order ID
@@ -310,7 +316,6 @@ useEffect(() => {
   useEffect(() => {
     updateCartItemCount();
     window.addEventListener("storage", updateCartItemCount);
-    
 
     return () => {
       window.removeEventListener("storage", updateCartItemCount);
@@ -338,7 +343,6 @@ useEffect(() => {
 
   const handlePreOrderChange = (e) => {
     setIsPreOrder(e.target.checked);
-    
   };
 
   const handlePreOrderDateChange = (e) => {
@@ -392,7 +396,7 @@ useEffect(() => {
     return {
       total: subtotal + gst + deliveryAmount,
       gst,
-      delivery:deliveryAmount,
+      delivery: deliveryAmount,
       subtotal,
     };
   };
@@ -549,7 +553,7 @@ useEffect(() => {
                     order!
                   </p>
                 </div>
-                 <div className="mt-4">
+                <div className="mt-4">
                   <label className="flex items-center">
                     <input
                       type="checkbox"
@@ -567,16 +571,16 @@ useEffect(() => {
                     <label className="text-[14px] font-semibold block mb-1">
                       Select Pre-order Date:
                     </label>
-                
+
                     <DatePicker
                       selected={selectedDate}
-                      onChange={(date) => setSelectedDate(date)}
+                      onChange={(date) => setSelectedDate(formatDate(date))}
                       excludeDates={excludedDates}
                       dateFormat="dd/MM/yyyy"
                       minDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)}
                       className="w-full rounded-lg bg-[#ffff] border p-4 border-[#000000] h-10"
                     />
-                  </div>  
+                  </div>
                 )}
               </div>
               <div className="w-full lg:w-10/12">

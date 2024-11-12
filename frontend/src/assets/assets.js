@@ -247,7 +247,7 @@ export const food_list = [
   },*/ 
  /* {
     _id: "8",
-    name: "Foxtail Mixture | Millet Mixture",
+    name: "Foxtail Mixture | Seemai Thinai Mixture | Millet Mixture",
     description:"Experience the wholesome goodness of Seemai Thinai Mixture, a delicious blend of crispy grains, nuts, and spices. Made with the finest Seemai Thinai, this healthy snack is perfect for guilt-free munching anytime. Enjoy a burst of traditional flavors with every bite!",
     image: [seemai1, seemai2],
     weights: [
@@ -361,7 +361,7 @@ export const food_list = [
   },
  /* {
     _id: "17",
-    name: "Bombay Mixture",
+    name: "Meals Mixture | Bombay Mixture",
     description:
       " Meals Mixture is a crunchy, flavorful blend of crispy besan flour strands, roasted peanuts,  cumin, and green peas. Perfectly spiced and savory, it offers a delightful mix of textures and flavors, making it an irresistible snack for any time of the day.",
     image: [meals1, meals2],
