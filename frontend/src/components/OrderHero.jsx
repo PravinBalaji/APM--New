@@ -13,7 +13,7 @@ const OrdersPage = () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const response = await axios.get(
-        `https://www.annapoornamithai.com/customers/orders?mobile=${inputValue}`,
+        `https://www.tst.annapoornamithai.com/customers/orders?mobile=${inputValue}`,
         {
           withCredentials: true,
           headers: {
@@ -43,7 +43,7 @@ const OrdersPage = () => {
     try {
       console.log(order_id);
       const response = await axios.patch(
-        "https://www.annapoornamithai.com/customers/orders",
+        "https://www.tst.annapoornamithai.com/customers/orders",
         {
           order_id: order_id,
         }

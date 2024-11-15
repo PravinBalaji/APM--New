@@ -14,7 +14,7 @@ const StoreContextProvider = (props) => {
   const fetchFoodList = async () => {
     try {
       // Make the API call
-      const response = await axios.get("https://www.annapoornamithai.com/menus/menuItems");
+      const response = await axios.get("https://www.tst.annapoornamithai.com/menus/menuItems");
       setFoodList(response.data.data); // Assuming the data is in response.data.data
       setIsLoading(false);
     } catch (err) {

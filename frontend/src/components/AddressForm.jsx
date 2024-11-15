@@ -38,7 +38,7 @@ const AddressForm = ({ onClose, setHasVerified,handlePlaceOrder }) => {
     setIsVerifying(true);
     try {
       const response = await axios.post(
-        "https://www.annapoornamithai.com/feature/checkPincode",
+        "https://www.tst.annapoornamithai.com/feature/checkPincode",
         {
           pincode: formData.pincode,
         }

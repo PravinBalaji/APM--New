@@ -32,7 +32,7 @@ const Admin = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "https://www.annapoornamithai.com/admin/manage-orders",
+        "https://www.tst.annapoornamithai.com/admin/manage-orders",
         {
           deliveryStatus: status,
         }
@@ -53,7 +53,7 @@ const Admin = () => {
     console.log(selectedDate);
     try {
       const response = await axios.post(
-        "https://www.annapoornamithai.com/feature/view-report",
+        "https://www.tst.annapoornamithai.com/feature/view-report",
         {
           inputdate: selectedDate,
         }
@@ -75,7 +75,7 @@ const Admin = () => {
     console.log("Selected Date :" + selectedDate);
     try {
       const response = await axios.post(
-        "https://www.annapoornamithai.com/feature/download-report",
+        "https://www.tst.annapoornamithai.com/feature/download-report",
         {
           inputdate: selectedDate,
         }
@@ -114,7 +114,7 @@ const Admin = () => {
       setIsLoading(true);
       try {
         await axios.patch(
-          "https://www.annapoornamithai.com/admin/manage-orders",
+          "https://www.tst.annapoornamithai.com/admin/manage-orders",
           {
             order_id: orderId,
             delivery_status: newStatus,
@@ -133,7 +133,7 @@ const Admin = () => {
     try {
       setIsLoading(true);
       await axios.patch(
-        "https://www.annapoornamithai.com/admin/manage-orders",
+        "https://www.tst.annapoornamithai.com/admin/manage-orders",
         {
           order_id: selectedOrderId,
           delivery_status: "shipped",
@@ -157,7 +157,7 @@ const Admin = () => {
   const handleCancelOrder = async (order_id) => {
     try {
       const response = await axios.patch(
-        "https://www.annapoornamithai.com/admin/cancel-order",
+        "https://www.tst.annapoornamithai.com/admin/cancel-order",
         {
           order_id: order_id,
         }

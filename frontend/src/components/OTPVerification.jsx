@@ -44,7 +44,7 @@ const OTPVerification = ({
 
     try {
       const response = await axios.post(
-        "https://www.annapoornamithai.com/customers/verify-otp",
+        "https://www.tst.annapoornamithai.com/customers/verify-otp",
         {
           mobile: inputValue,
           otp: otpString,
