@@ -1,7 +1,4 @@
-import food_1 from "./food_1.svg";
-import food_2 from "./food_2.svg";
-import food_3 from "./food_3.svg";
-import food_4 from "./food_4.svg";
+
 import Makhana from "./Makhana.jpg";
 import CreamMakhana from "./Creammakhana.jpg";
 const choco =
@@ -90,20 +87,7 @@ import star from "./star 3.svg";
 
 export const assets = {};
 
-export const slides = [
-  {
-    url: "",
-  },
-  {
-    url: "",
-  },
-  {
-    url: "",
-  },
-  {
-    url: "",
-  },
-];
+
 
 export const review = [
   {

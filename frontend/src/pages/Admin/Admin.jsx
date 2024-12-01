@@ -2,18 +2,24 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../../components/Loader/Loader";
 
-
 const Admin = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [consignmentNumber, setConsignmentNumber] = useState("");
+  const [trackingUrl, setTrackingUrl] = useState("");
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [orderCancelled, setOrderCancelled] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showDailyReportTable, setShowDailyReportTable] = useState(false);
 
   useEffect(() => {
-    if (activeTab !== "dashboard" && activeTab !== "dailyreports" || orderCancelled) {
+    if (
+      (activeTab !== "dashboard" && activeTab !== "dailyreports") ||
+      orderCancelled
+    ) {
       fetchOrders(activeTab);
       setOrderCancelled(false);
     }
@@ -26,12 +32,14 @@ const Admin = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "https://www.annapoornamithai.com/admin/manage-orders",
+        "https://www.tst.annapoornamithai.com/admin/manage-orders",
         {
           deliveryStatus: status,
         }
       );
-      setOrders(Array.isArray(response.data.result) ? response.data.result : []);
+      setOrders(
+        Array.isArray(response.data.result) ? response.data.result : []
+      );
     } catch (error) {
       console.error("Error fetching orders:", error);
       setOrders([]);
@@ -42,15 +50,17 @@ const Admin = () => {
 
   const fetchDailyReports = async () => {
     setIsLoading(true);
-    console.log(selectedDate)
+    console.log(selectedDate);
     try {
       const response = await axios.post(
-        "https://www.annapoornamithai.com/feature/view-report",
+        "https://www.tst.annapoornamithai.com/feature/view-report",
         {
-          inputdate: selectedDate
+          inputdate: selectedDate,
         }
       );
-      setOrders(Array.isArray(response.data.result) ? response.data.result : []);
+      setOrders(
+        Array.isArray(response.data.result) ? response.data.result : []
+      );
       setShowDailyReportTable(true);
     } catch (error) {
       console.error("Error fetching daily reports:", error);
@@ -60,21 +70,24 @@ const Admin = () => {
     }
   };
 
-
   const handleDownloadReport = async () => {
     setIsLoading(true);
-    console.log("Selected Date :" + selectedDate)
+    console.log("Selected Date :" + selectedDate);
     try {
-      const response = await axios.post("https://www.annapoornamithai.com/feature/download-report", {
-        inputdate:selectedDate,
-        
-      });
-  
+      const response = await axios.post(
+        "https://www.tst.annapoornamithai.com/feature/download-report",
+        {
+          inputdate: selectedDate,
+        }
+      );
+
       // if (!response.ok) {
       //   throw new Error("Network response was not ok");
       // }
-  
-      const blob = new Blob([response.data], { type: response.headers['content-type'] });
+
+      const blob = new Blob([response.data], {
+        type: response.headers["content-type"],
+      });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -92,18 +105,51 @@ const Admin = () => {
   };
 
   const changeStatus = async (orderId, newStatus) => {
-    setIsLoading(true);
+    
+    if (newStatus === "shipped") {
+      // Show modal for consignment number and tracking URL input
+      setSelectedOrderId(orderId);
+      setShowModal(true);
+    } else {
+      setIsLoading(true);
+      try {
+        await axios.patch(
+          "https://www.tst.annapoornamithai.com/admin/manage-orders",
+          {
+            order_id: orderId,
+            delivery_status: newStatus,
+          }
+        );
+        await fetchOrders(activeTab);
+      } catch (error) {
+        console.error("Error changing order status:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const handleFormSubmit = async () => {
     try {
+      setIsLoading(true);
       await axios.patch(
-        "https://www.annapoornamithai.com/admin/manage-orders",
+        "https://www.tst.annapoornamithai.com/admin/manage-orders",
         {
-          order_id: orderId,
-          delivery_status: newStatus,
+          order_id: selectedOrderId,
+          delivery_status: "shipped",
+          consignment_number: consignmentNumber,
+          tracking_url: trackingUrl,
         }
       );
-      await fetchOrders(activeTab);
+      // Close modal and reset fields
+      setShowModal(false);
+      setConsignmentNumber("");
+      setTrackingUrl("");
+      
+      // Ensure that you wait for fetchOrders to complete
+      await fetchOrders(activeTab); // Add 'await' here
     } catch (error) {
-      console.error("Error changing order status:", error);
+      console.error("Error updating shipment details:", error);
     } finally {
       setIsLoading(false);
     }
@@ -111,7 +157,7 @@ const Admin = () => {
   const handleCancelOrder = async (order_id) => {
     try {
       const response = await axios.patch(
-        "https://www.annapoornamithai.com/admin/cancel-order",
+        "https://www.tst.annapoornamithai.com/admin/cancel-order",
         {
           order_id: order_id,
         }
@@ -122,8 +168,6 @@ const Admin = () => {
       console.log(err);
     }
   };
-
-  
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
@@ -184,6 +228,13 @@ const Admin = () => {
         {order.cancelled_date && (
           <p>Cancelled Date: {formatDate(order.cancelled_date)}</p>
         )}
+        {order.tracking_url && (
+          <h4 className="font-bold mt-4">Tracking URL : {order.tracking_url}</h4>
+        )}
+        {order.consignment_number && (
+          <h4 className="font-bold">Consignment Number : {order.consignment_number}</h4>
+        )}
+        
 
         <div className="mt-4">
           <h4 className="font-semibold">Order Items:</h4>
@@ -242,7 +293,12 @@ const Admin = () => {
         onChange={(date) => setSelectedDate(date)}
         className="p-2 border rounded"
       /> */}
-      <input type="date" className="date-picker p-2 rounded-md shadow-lg" value={selectedDate} onChange={(e)=>setSelectedDate(e.target.value)}></input>
+      <input
+        type="date"
+        className="date-picker p-2 rounded-md shadow-lg"
+        value={selectedDate}
+        onChange={(e) => setSelectedDate(e.target.value)}
+      ></input>
       <button
         onClick={fetchDailyReports}
         className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
@@ -296,12 +352,12 @@ const Admin = () => {
         </tbody>
       </table>
       <button
-      onClick={handleDownloadReport}
-      className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
-      disabled={isLoading}
-    >
-      {isLoading ? 'Downloading...' : 'Download Report'}
-    </button>
+        onClick={handleDownloadReport}
+        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+        disabled={isLoading}
+      >
+        {isLoading ? "Downloading..." : "Download Report"}
+      </button>
     </div>
   );
 
@@ -329,6 +385,7 @@ const Admin = () => {
       </button>
 
       {/* Sidebar */}
+
       <div
         className={`fixed inset-y-0 left-0 transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -379,7 +436,9 @@ const Admin = () => {
             <Loader />
           </div>
         ) : activeTab === "dashboard" ? (
-          <p>Welcome to the admin dashboard. Select a category to view orders.</p>
+          <p>
+            Welcome to the admin dashboard. Select a category to view orders.
+          </p>
         ) : activeTab === "dailyreports" ? (
           <>
             <DailyReportsDatePicker />
@@ -399,6 +458,52 @@ const Admin = () => {
           <p>No data found for this category.</p>
         )}
       </div>
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h2 className="text-xl font-semibold mb-4">
+              Enter Shipment Details
+            </h2>
+
+            <label className="block mb-3">
+              Consignment Number:
+              <input
+                type="text"
+                value={consignmentNumber}
+                onChange={(e) => setConsignmentNumber(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </label>
+
+            <label className="block mb-3">
+              Tracking URL:
+              <input
+                type="url"
+                value={trackingUrl}
+                placeholder="https://example.com"
+                onChange={(e) => setTrackingUrl(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </label>
+
+            <div className="flex justify-end space-x-3 mt-4">
+              <button
+                onClick={handleFormSubmit}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+              >
+                Submit
+              </button>
+
+              <button
+                onClick={() => setShowModal(false)}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition duration-200"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Overlay for mobile when sidebar is open */}
       {isSidebarOpen && (
         <div

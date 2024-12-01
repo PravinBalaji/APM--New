@@ -38,7 +38,7 @@ const AddressForm = ({ onClose, setHasVerified,handlePlaceOrder }) => {
     setIsVerifying(true);
     try {
       const response = await axios.post(
-        "https://www.annapoornamithai.com/feature/checkPincode",
+        "https://www.tst.annapoornamithai.com/feature/checkPincode",
         {
           pincode: formData.pincode,
         }
@@ -84,7 +84,7 @@ const AddressForm = ({ onClose, setHasVerified,handlePlaceOrder }) => {
               PERSONAL DETAILS*
             </h3>
             <input
-              type="text"
+              type="text" pattern="[A-Z a-z]*"
               name="name"
               value={formData.name}
               onChange={handleChange}
@@ -95,7 +95,8 @@ const AddressForm = ({ onClose, setHasVerified,handlePlaceOrder }) => {
           </div>
           <div className="mb-4">
             <input
-              type="text"
+              type="number"
+              maxLength='10'
               name="mobile"
               value={formData.mobile}
               onChange={handleChange}

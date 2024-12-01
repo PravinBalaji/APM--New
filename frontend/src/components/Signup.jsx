@@ -26,7 +26,7 @@ import VerificationSuccess from './VerificationSuccess';
     }
     setIsLoading(true);
     try {
-      const response = await axios.post("https://www.annapoornamithai.com/customers/signup", {
+      const response = await axios.post("https://www.tst.annapoornamithai.com/customers/signup", {
         name: formData.name,
         email: formData.email,
         mobile: formData.mobile,

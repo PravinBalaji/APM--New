@@ -92,7 +92,7 @@ const CartPage = () => {
     try {
       console.log("Sending OTP to:", inputValue);
       const response = await axios.post(
-        "https://www.annapoornamithai.com/customers/send-otp",
+        "https://www.tst.annapoornamithai.com/customers/send-otp",
         { mobile: inputValue },
 
         { withCredentials: true }
@@ -170,7 +170,7 @@ const CartPage = () => {
       const cart = localStorage.getItem("cart");
       console.log(preOrderDate);
       const response = await axios.post(
-        "https://www.annapoornamithai.com/customers/orders",
+        "https://www.tst.annapoornamithai.com/customers/orders",
         {
           totalPrice: total.toFixed(2),
           currency: "INR",
@@ -199,7 +199,8 @@ const CartPage = () => {
 
       // Step 2: Initiate the Razorpay payment
       const options = {
-        key: process.env.REACT_APP_RAZOR_LIVE_KEY,
+        // key: process.env.REACT_APP_RAZOR_LIVE_KEY,
+        key: "rzp_test_ZyVKG8K6k1Gol1", // FOR TEST
         amount: order.amount,
         currency: "INR",
         name: "Annapoorna Mithai",
@@ -214,7 +215,7 @@ const CartPage = () => {
             console.log(delivery);
             setIsLoading(true);
             const paymentResponse = await axios.post(
-              "https://www.annapoornamithai.com/customers/verify-order",
+              "https://www.tst.annapoornamithai.com/customers/verify-order",
               {
                 orderId: order.id,
                 paymentId: response.razorpay_payment_id,
